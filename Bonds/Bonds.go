@@ -1,9 +1,9 @@
 package Bonds
 
 import (
-	"FenixTestInstructionsDataAdmin/TestCaseModelElementTypes"
-	"FenixTestInstructionsDataAdmin/TypeAndStructs"
-	"FenixTestInstructionsDataAdmin/shared_code"
+	//"FenixTestInstructionsDataAdmin/TestCaseModelElementTypes"
+	"github.com/jlambert68/FenixTestInstructionsAdminShared/TestCaseModelElementTypes"
+	"github.com/jlambert68/FenixTestInstructionsAdminShared/TypeAndStructs"
 )
 
 const (
@@ -237,7 +237,7 @@ var ImmatureBonds []TypeAndStructs.ImmatureBondStruct
 // Function that creates all data for the TestInstruction
 func Initate_ImmatureBonds() {
 
-	updatedTimeStamp := TypeAndStructs.UpdatedTimeStampType(shared_code.GenerateDatetimeTimeStampForDB())
+	updatedTimeStamp := TypeAndStructs.UpdatedTimeStampType("2023-12-13 17:00:00")
 
 	// B0_BOND
 	var BOND_B0 TypeAndStructs.ImmatureBondStruct
