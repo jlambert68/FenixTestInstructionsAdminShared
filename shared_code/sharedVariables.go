@@ -1,6 +1,6 @@
 package shared_code
 
-import "FenixTestInstructionsDataAdmin/TestInstructionAndTestInstuctionContainerTypes"
+import "github.com/jlambert68/FenixTestInstructionsAdminShared/TestInstructionAndTestInstuctionContainerTypes"
 
 // Environment variables
 var (

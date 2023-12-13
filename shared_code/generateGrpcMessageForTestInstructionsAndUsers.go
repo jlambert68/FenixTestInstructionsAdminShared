@@ -1,8 +1,8 @@
 package shared_code
 
 import (
-	"FenixTestInstructionsDataAdmin/TestInstructionAndTestInstuctionContainerTypes"
 	fenixExecutionWorkerGrpcApi "github.com/jlambert68/FenixGrpcApi/FenixExecutionServer/fenixExecutionWorkerGrpcApi/go_grpc_api"
+	"github.com/jlambert68/FenixTestInstructionsAdminShared/TestInstructionAndTestInstuctionContainerTypes"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 

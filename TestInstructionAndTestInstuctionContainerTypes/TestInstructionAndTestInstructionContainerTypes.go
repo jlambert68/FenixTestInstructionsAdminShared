@@ -1,8 +1,8 @@
 package TestInstructionAndTestInstuctionContainerTypes
 
 import (
-	"FenixTestInstructionsDataAdmin/LocalExecutionMethods"
-	"FenixTestInstructionsDataAdmin/TypeAndStructs"
+	"github.com/jlambert68/FenixTestInstructionsAdminShared/LocalExecutionMethods"
+	"github.com/jlambert68/FenixTestInstructionsAdminShared/TypeAndStructs"
 	"time"
 )
 

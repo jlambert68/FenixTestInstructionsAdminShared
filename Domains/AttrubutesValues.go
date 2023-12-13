@@ -1,6 +1,6 @@
 package Domains
 
-import "FenixTestInstructionsDataAdmin/TypeAndStructs"
+import "github.com/jlambert68/FenixTestInstructionsAdminShared/TypeAndStructs"
 
 // ** Domains ***
 const (

@@ -1,9 +1,9 @@
 package shared_code
 
 import (
-	"FenixTestInstructionsDataAdmin/TestInstructionAndTestInstuctionContainerTypes"
-	"FenixTestInstructionsDataAdmin/TypeAndStructs"
 	fenixExecutionWorkerGrpcApi "github.com/jlambert68/FenixGrpcApi/FenixExecutionServer/fenixExecutionWorkerGrpcApi/go_grpc_api"
+	"github.com/jlambert68/FenixTestInstructionsAdminShared/TestInstructionAndTestInstuctionContainerTypes"
+	"github.com/jlambert68/FenixTestInstructionsAdminShared/TypeAndStructs"
 )
 
 // GenerateStandardFromGrpcMessageForTestInstructionsAndUsers

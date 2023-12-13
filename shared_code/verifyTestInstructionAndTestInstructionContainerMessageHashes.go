@@ -1,10 +1,9 @@
 package shared_code
 
 import (
-	"FenixTestInstructionsDataAdmin/TestInstructionAndTestInstuctionContainerTypes"
 	"encoding/json"
 	"fmt"
-	"github.com/jlambert68/FenixSyncShared"
+	"github.com/jlambert68/FenixTestInstructionsAdminShared/TestInstructionAndTestInstuctionContainerTypes"
 )
 
 // VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes

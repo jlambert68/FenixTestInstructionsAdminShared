@@ -1,7 +1,6 @@
 package Bonds
 
 import (
-	//"FenixTestInstructionsDataAdmin/TestCaseModelElementTypes"
 	"github.com/jlambert68/FenixTestInstructionsAdminShared/TestCaseModelElementTypes"
 	"github.com/jlambert68/FenixTestInstructionsAdminShared/TypeAndStructs"
 )
