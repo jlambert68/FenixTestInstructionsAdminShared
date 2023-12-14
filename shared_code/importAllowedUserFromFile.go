@@ -8,6 +8,9 @@ import (
 
 func ImportAllowedUsersFromFile() (err error) {
 
+	// Get Environment variable for relative path us json file with allowed users for this connector
+	RelativePathToAllowedUsersList = MustGetenv("RelativePathToAllowedUsersList")
+
 	var allowedUsersFile *os.File
 	allowedUsersFile, err = os.Open(RelativePathToAllowedUsersList)
 
