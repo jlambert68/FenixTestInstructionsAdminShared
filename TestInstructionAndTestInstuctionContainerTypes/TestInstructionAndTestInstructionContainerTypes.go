@@ -1,10 +1,14 @@
 package TestInstructionAndTestInstuctionContainerTypes
 
 import (
-	"github.com/jlambert68/FenixTestInstructionsAdminShared/LocalExecutionMethods"
 	"github.com/jlambert68/FenixTestInstructionsAdminShared/TypeAndStructs"
 	"time"
 )
+
+// Define a struct with field of any type
+type AnyType struct {
+	Value interface{}
+}
 
 // MessageTypes used when defining the TestInstructionsMap and TestInstructionContainersMap themselves
 
@@ -17,7 +21,8 @@ type TestInstructionStruct struct {
 	TestInstructionAttribute           []*TypeAndStructs.TestInstructionAttributeStruct           `json:"TestInstructionAttribute"`
 	ImmatureElementModel               []*TypeAndStructs.ImmatureElementModelMessageStruct        `json:"ImmatureElementModel"`
 	//FangEngineClassesMethodsAttributes *FangEngineClassesAndMethods.FangEngineClassesMethodsAttributesStruct `json:"FangEngineClassesMethodsAttributes"`
-	LocalExecutionMethods *LocalExecutionMethods.MethodsForLocalExecutionsStruct `json:"LocalExecutionMethods"`
+	//LocalExecutionMethods *LocalExecutionMethods.MethodsForLocalExecutionsStruct `json:"LocalExecutionMethods"`
+	LocalExecutionMethods AnyType `json:"LocalExecutionMethods"`
 }
 
 // TestInstructionContainerStruct

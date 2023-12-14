@@ -3,11 +3,13 @@ package shared_code
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/jlambert68/FenixSyncShared"
 	"github.com/jlambert68/FenixTestInstructionsAdminShared/TestInstructionAndTestInstuctionContainerTypes"
 )
 
 // VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes
-// Verifies the hashes for the test instructions, test instruction containers, and allowed users in the given gRPC-message and compare to calculates Hashes
+// Verifies the hashes for the test instructions, test instruction containers, and allowed users in the
+// given gRPC-message and compare to calculates Hashes
 func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 	testInstructionsAndTestInstructionContainersMessageToCheck *TestInstructionAndTestInstuctionContainerTypes.TestInstructionsAndTestInstructionsContainersStruct) (errorSlice []error) {
 

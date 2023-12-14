@@ -17,7 +17,7 @@ func ImportAllowedUsersFromFile() (err error) {
 	}
 
 	jsonParser := json.NewDecoder(allowedUsersFile)
-	if err = jsonParser.Decode(&AllowedUsersLoadFronJsonFile); err != nil {
+	if err = jsonParser.Decode(&AllowedUsersLoadFromJsonFile); err != nil {
 		log.Fatalln("parsing json file containing allowed users", err.Error())
 
 		return err

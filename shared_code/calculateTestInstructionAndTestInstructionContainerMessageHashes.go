@@ -3,13 +3,17 @@ package shared_code
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/jlambert68/FenixTestInstructionsAdminShared/LocalExecutionMethods"
+	"github.com/jlambert68/FenixSyncShared"
 	"github.com/jlambert68/FenixTestInstructionsAdminShared/TestInstructionAndTestInstuctionContainerTypes"
 )
 
 // CalculateTestInstructionAndTestInstructionContainerAndUsersMessageHashes
 // Calculates the hashes for the test instructions, test instruction containers, and allowed users in the given message
-func CalculateTestInstructionAndTestInstructionContainerAndUsersMessageHashes(testInstructionsAndTestInstructionContainersMessage *TestInstructionAndTestInstuctionContainerTypes.TestInstructionsAndTestInstructionsContainersStruct) (err error) {
+func CalculateTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
+	testInstructionsAndTestInstructionContainersMessage *TestInstructionAndTestInstuctionContainerTypes.TestInstructionsAndTestInstructionsContainersStruct,
+	// pushToTempStoreFunction PushToTempStoreFunctionType[*TestInstructionAndTestInstuctionContainerTypes.AnyType],
+	// PullFromTempStoreFunction PullFromTempStoreFunctionType[*TestInstructionAndTestInstuctionContainerTypes.AnyType]
+) (err error) {
 
 	// Used for converting before hashing and when hashing
 	var byteSlice []byte
@@ -25,13 +29,16 @@ func CalculateTestInstructionAndTestInstructionContainerAndUsersMessageHashes(te
 		for _, tempTestInstructionVersion := range tempTestInstruction.TestInstructionVersions {
 
 			// Temporary set Local Execution Methods to nil due to they shouldn't be included in Hash
-			var tempLocalExecutionMethods *LocalExecutionMethods.MethodsForLocalExecutionsStruct
+			//var tempLocalExecutionMethods *LocalExecutionMethods.MethodsForLocalExecutionsStruct
+			var tempLocalExecutionMethods TestInstructionAndTestInstuctionContainerTypes.AnyType
 
 			// Save reference copy LocalExecution-object
+			//tempLocalExecutionMethods = tempTestInstructionVersion.TestInstructionInstance.LocalExecutionMethods
+			//pushToTempStoreFunction(tempTestInstructionVersion.TestInstructionInstance.LocalExecutionMethods.Value)
 			tempLocalExecutionMethods = tempTestInstructionVersion.TestInstructionInstance.LocalExecutionMethods
 
 			// Clear LocalExecution before hashing
-			tempTestInstructionVersion.TestInstructionInstance.LocalExecutionMethods = nil
+			tempTestInstructionVersion.TestInstructionInstance.LocalExecutionMethods.Value = nil
 
 			// Convert TestInstructionVersion to byte-string and then Hash message
 			byteSlice, err = json.Marshal(&tempTestInstructionVersion)
@@ -41,6 +48,7 @@ func CalculateTestInstructionAndTestInstructionContainerAndUsersMessageHashes(te
 			}
 
 			// Repopulate LocalExecution-object after Hashing
+			//tempTestInstructionVersion.TestInstructionInstance.LocalExecutionMethods = PullFromTempStoreFunction() //tempLocalExecutionMethods
 			tempTestInstructionVersion.TestInstructionInstance.LocalExecutionMethods = tempLocalExecutionMethods
 
 			// Convert byteSlice into string

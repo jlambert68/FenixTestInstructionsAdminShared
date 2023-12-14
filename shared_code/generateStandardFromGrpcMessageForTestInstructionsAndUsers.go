@@ -150,7 +150,7 @@ func GenerateStandardFromGrpcMessageForTestInstructionsAndUsers(
 					ImmatureTestInstructionInformation: immatureTestInstructionInformationMessages,
 					TestInstructionAttribute:           testInstructionAttributes,
 					ImmatureElementModel:               immatureElementModelMessages,
-					LocalExecutionMethods:              nil, // Not needed here
+					LocalExecutionMethods:              TestInstructionAndTestInstuctionContainerTypes.AnyType{Value: nil}, // Don't include when calculating Hash
 				},
 				TestInstructionInstanceMajorVersion: int(testInstructionInstanceVersionMessageGrpc.GetTestInstructionInstanceMajorVersion()),
 				TestInstructionInstanceMinorVersion: int(testInstructionInstanceVersionMessageGrpc.GetTestInstructionInstanceMinorVersion()),
