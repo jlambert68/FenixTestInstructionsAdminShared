@@ -3,6 +3,8 @@ package shared_code
 import (
 	fenixExecutionWorkerGrpcApi "github.com/jlambert68/FenixGrpcApi/FenixExecutionServer/fenixExecutionWorkerGrpcApi/go_grpc_api"
 	"google.golang.org/protobuf/types/known/timestamppb"
+	"log"
+	"os"
 	"time"
 )
 
@@ -61,4 +63,15 @@ func GetHighestExecutionWorkerProtoFileVersion() int32 {
 	highestExecutionWorkerProtoFileVersion = maxValue
 
 	return highestExecutionWorkerProtoFileVersion
+}
+
+// MustGetenv
+// is a helper function for getting environment variables.
+// End program if environment variable is not set .
+func MustGetenv(k string) string {
+	v := os.Getenv(k)
+	if v == "" {
+		log.Fatalf("Warning: %s environment variable not set.\n", k)
+	}
+	return v
 }
