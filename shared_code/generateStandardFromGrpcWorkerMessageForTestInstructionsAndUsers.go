@@ -6,8 +6,9 @@ import (
 	"github.com/jlambert68/FenixTestInstructionsAdminShared/TypeAndStructs"
 )
 
-// GenerateStandardFromGrpcMessageForTestInstructionsAndUsers
-func GenerateStandardFromGrpcMessageForTestInstructionsAndUsers(
+// GenerateStandardFromGrpcWorkerMessageForTestInstructionsAndUsers
+// Generate the original message structure from Worker gRPC-version
+func GenerateStandardFromGrpcWorkerMessageForTestInstructionsAndUsers(
 	supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage *fenixExecutionWorkerGrpcApi.SupportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage) (
 	testInstructionsAndTestInstructionContainersMessage *TestInstructionAndTestInstuctionContainerTypes.TestInstructionsAndTestInstructionsContainersStruct,
 	err error) {

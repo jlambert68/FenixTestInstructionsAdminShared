@@ -1,36 +1,38 @@
 package shared_code
 
 import (
-	fenixExecutionWorkerGrpcApi "github.com/jlambert68/FenixGrpcApi/FenixExecutionServer/fenixExecutionWorkerGrpcApi/go_grpc_api"
+	fenixTestCaseBuilderServerGrpcApi "github.com/jlambert68/FenixGrpcApi/FenixTestCaseBuilderServer/fenixTestCaseBuilderServerGrpcApi/go_grpc_api"
 	"github.com/jlambert68/FenixTestInstructionsAdminShared/TestInstructionAndTestInstuctionContainerTypes"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
-func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcMessage(
+// GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
+// Generates the gRPC message to be sent to Builder for Supported  TestInstructions, TestInstructionContainers and Allowed Users
+func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage(
 	domainUuid string,
 	testInstructionsAndTestInstructionContainersMessage *TestInstructionAndTestInstuctionContainerTypes.TestInstructionsAndTestInstructionsContainersStruct) (
-	supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage *fenixExecutionWorkerGrpcApi.SupportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage,
+	supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage *fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage,
 	err error) {
 
 	// Convert TestInstructions into gRPC-message-version
 	// Generate gRPC-version of TestInstructionInstanceVersionsMessageMap
-	var testInstructionInstanceVersionsMessageMap map[string]*fenixExecutionWorkerGrpcApi.TestInstructionInstanceVersionsMessage
-	testInstructionInstanceVersionsMessageMap = make(map[string]*fenixExecutionWorkerGrpcApi.TestInstructionInstanceVersionsMessage)
+	var testInstructionInstanceVersionsMessageMap map[string]*fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionInstanceVersionsMessage
+	testInstructionInstanceVersionsMessageMap = make(map[string]*fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionInstanceVersionsMessage)
 
 	// Loop all TestInstructionInstanceVersionsMessages
 	for originalElementUUIDType, testInstructionInstanceVersionsMessage := range testInstructionsAndTestInstructionContainersMessage.TestInstructions.TestInstructionsMap {
 
 		// Loop TestInstructionVersions and create gRPC-version
-		var testInstructionInstanceVersionMessagesGrpc []*fenixExecutionWorkerGrpcApi.TestInstructionInstanceVersionMessage
+		var testInstructionInstanceVersionMessagesGrpc []*fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionInstanceVersionMessage
 		for _, testInstructionInstanceVersionMessage := range testInstructionInstanceVersionsMessage.TestInstructionVersions {
 
 			// Loop and Create 'ImmatureTestInstructionInformations' for 'testInstructionInstanceVersionMessageGrpc'
-			var immatureTestInstructionInformationMessagesGrpc []*fenixExecutionWorkerGrpcApi.ImmatureTestInstructionInformationMessage
+			var immatureTestInstructionInformationMessagesGrpc []*fenixTestCaseBuilderServerGrpcApi.SupportedImmatureTestInstructionInformationMessage
 			for _, immatureTestInstructionInformationMessage := range testInstructionInstanceVersionMessage.TestInstructionInstance.ImmatureTestInstructionInformation {
 
 				// Create the gRPC-version of the message
-				var immatureTestInstructionInformationMessageGrpc *fenixExecutionWorkerGrpcApi.ImmatureTestInstructionInformationMessage
-				immatureTestInstructionInformationMessageGrpc = &fenixExecutionWorkerGrpcApi.ImmatureTestInstructionInformationMessage{
+				var immatureTestInstructionInformationMessageGrpc *fenixTestCaseBuilderServerGrpcApi.SupportedImmatureTestInstructionInformationMessage
+				immatureTestInstructionInformationMessageGrpc = &fenixTestCaseBuilderServerGrpcApi.SupportedImmatureTestInstructionInformationMessage{
 					DomainUUID:                   string(immatureTestInstructionInformationMessage.DomainUUID),
 					DomainName:                   string(immatureTestInstructionInformationMessage.DomainName),
 					TestInstructionUUID:          string(immatureTestInstructionInformationMessage.TestInstructionUUID),
@@ -54,12 +56,12 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcMessage(
 			}
 
 			// Loop and Create 'TestInstructionAttributes' for 'testInstructionInstanceVersionMessageGrpc'
-			var testInstructionAttributesGrpc []*fenixExecutionWorkerGrpcApi.TestInstructionAttributeMessage
+			var testInstructionAttributesGrpc []*fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionAttributeMessage
 			for _, testInstructionAttribute := range testInstructionInstanceVersionMessage.TestInstructionInstance.TestInstructionAttribute {
 
 				// Create the gRPC-version of the message
-				var testInstructionAttributeMessageGrpc *fenixExecutionWorkerGrpcApi.TestInstructionAttributeMessage
-				testInstructionAttributeMessageGrpc = &fenixExecutionWorkerGrpcApi.TestInstructionAttributeMessage{
+				var testInstructionAttributeMessageGrpc *fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionAttributeMessage
+				testInstructionAttributeMessageGrpc = &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionAttributeMessage{
 					DomainUUID:                                    string(testInstructionAttribute.DomainUUID),
 					DomainName:                                    string(testInstructionAttribute.DomainName),
 					TestInstructionUUID:                           string(testInstructionAttribute.TestInstructionUUID),
@@ -86,12 +88,12 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcMessage(
 			}
 
 			// Loop and Create 'ImmatureElementModel' for 'testInstructionInstanceVersionMessageGrpc'
-			var immatureElementModelMessagesGrpc []*fenixExecutionWorkerGrpcApi.ImmatureElementModelMessage
+			var immatureElementModelMessagesGrpc []*fenixTestCaseBuilderServerGrpcApi.SupportedImmatureElementModelMessage
 			for _, immatureElementModel := range testInstructionInstanceVersionMessage.TestInstructionInstance.ImmatureElementModel {
 
 				// Create the gRPC-version of the message
-				var immatureElementModelMessageGrpc *fenixExecutionWorkerGrpcApi.ImmatureElementModelMessage
-				immatureElementModelMessageGrpc = &fenixExecutionWorkerGrpcApi.ImmatureElementModelMessage{
+				var immatureElementModelMessageGrpc *fenixTestCaseBuilderServerGrpcApi.SupportedImmatureElementModelMessage
+				immatureElementModelMessageGrpc = &fenixTestCaseBuilderServerGrpcApi.SupportedImmatureElementModelMessage{
 					DomainUUID:               string(immatureElementModel.DomainUUID),
 					DomainName:               string(immatureElementModel.DomainName),
 					ImmatureElementUUID:      string(immatureElementModel.ImmatureElementUUID),
@@ -111,10 +113,10 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcMessage(
 			}
 
 			// Create TestInstructionInstance to be converted into a gRPC-version
-			var testInstructionInstanceVersionMessageGrpc *fenixExecutionWorkerGrpcApi.TestInstructionInstanceVersionMessage
-			testInstructionInstanceVersionMessageGrpc = &fenixExecutionWorkerGrpcApi.TestInstructionInstanceVersionMessage{
-				TestInstructionInstance: &fenixExecutionWorkerGrpcApi.TestInstructionMessage{
-					TestInstruction: &fenixExecutionWorkerGrpcApi.TestInstructionBaseMessage{
+			var testInstructionInstanceVersionMessageGrpc *fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionInstanceVersionMessage
+			testInstructionInstanceVersionMessageGrpc = &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionInstanceVersionMessage{
+				TestInstructionInstance: &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionMessage{
+					TestInstruction: &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionBaseMessage{
 						DomainUUID:                   string(testInstructionInstanceVersionMessage.TestInstructionInstance.TestInstruction.DomainUUID),
 						DomainName:                   string(testInstructionInstanceVersionMessage.TestInstructionInstance.TestInstruction.DomainName),
 						TestInstructionUUID:          string(testInstructionInstanceVersionMessage.TestInstructionInstance.TestInstruction.TestInstructionUUID),
@@ -129,7 +131,7 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcMessage(
 						MinorVersionNumber:           int32(testInstructionInstanceVersionMessage.TestInstructionInstance.TestInstruction.MinorVersionNumber),
 						UpdatedTimeStamp:             string(testInstructionInstanceVersionMessage.TestInstructionInstance.TestInstruction.UpdatedTimeStamp),
 					},
-					BasicTestInstructionInformation: &fenixExecutionWorkerGrpcApi.BasicTestInstructionInformationMessage{
+					BasicTestInstructionInformation: &fenixTestCaseBuilderServerGrpcApi.SupportedBasicTestInstructionInformationMessage{
 						DomainUUID:                   string(testInstructionInstanceVersionMessage.TestInstructionInstance.BasicTestInstructionInformation.DomainUUID),
 						DomainName:                   string(testInstructionInstanceVersionMessage.TestInstructionInstance.BasicTestInstructionInformation.DomainName),
 						TestInstructionUUID:          string(testInstructionInstanceVersionMessage.TestInstructionInstance.BasicTestInstructionInformation.TestInstructionUUID),
@@ -162,8 +164,8 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcMessage(
 		}
 
 		// Create the object to be saved in Map
-		var testInstructionInstanceVersionsGrpc *fenixExecutionWorkerGrpcApi.TestInstructionInstanceVersionsMessage
-		testInstructionInstanceVersionsGrpc = &fenixExecutionWorkerGrpcApi.TestInstructionInstanceVersionsMessage{
+		var testInstructionInstanceVersionsGrpc *fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionInstanceVersionsMessage
+		testInstructionInstanceVersionsGrpc = &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionInstanceVersionsMessage{
 			TestInstructionVersions:     testInstructionInstanceVersionMessagesGrpc,
 			TestInstructionVersionsHash: testInstructionInstanceVersionsMessage.TestInstructionVersionsHash,
 		}
@@ -175,23 +177,23 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcMessage(
 
 	// Convert TestInstructionContainers into gRPC-message-version
 	// Generate gRPC-version of TestInstructionContainerInstanceVersionsMessageMap
-	var testInstructionContainerInstanceVersionsMessageMap map[string]*fenixExecutionWorkerGrpcApi.TestInstructionContainerInstanceVersionsMessage
-	testInstructionContainerInstanceVersionsMessageMap = make(map[string]*fenixExecutionWorkerGrpcApi.TestInstructionContainerInstanceVersionsMessage)
+	var testInstructionContainerInstanceVersionsMessageMap map[string]*fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionContainerInstanceVersionsMessage
+	testInstructionContainerInstanceVersionsMessageMap = make(map[string]*fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionContainerInstanceVersionsMessage)
 
 	// Loop all TestInstructionContainerInstanceVersionsMessages
 	for originalElementUUIDType, testInstructionContainerInstanceVersionsMessage := range testInstructionsAndTestInstructionContainersMessage.TestInstructionContainers.TestInstructionContainersMap {
 
 		// Loop TestInstructionContainerVersions and create gRPC-version
-		var testInstructionContainerInstanceVersionMessagesGrpc []*fenixExecutionWorkerGrpcApi.TestInstructionContainerInstanceVersionMessage
+		var testInstructionContainerInstanceVersionMessagesGrpc []*fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionContainerInstanceVersionMessage
 		for _, testInstructionContainerInstanceVersionMessage := range testInstructionContainerInstanceVersionsMessage.TestInstructionContainerVersions {
 
 			// Loop and Create 'ImmatureTestInstructionContainerInformations' for 'testInstructionContainerInstanceVersionMessageGrpc'
-			var immatureTestInstructionContainerInformationMessagesGrpc []*fenixExecutionWorkerGrpcApi.ImmatureTestInstructionContainerInformationMessage
+			var immatureTestInstructionContainerInformationMessagesGrpc []*fenixTestCaseBuilderServerGrpcApi.SupportedImmatureTestInstructionContainerInformationMessage
 			for _, immatureTestInstructionContainerInformationMessage := range testInstructionContainerInstanceVersionMessage.TestInstructionContainerInstance.ImmatureTestInstructionContainer {
 
 				// Create the gRPC-version of the message
-				var immatureTestInstructionContainerInformationMessageGrpc *fenixExecutionWorkerGrpcApi.ImmatureTestInstructionContainerInformationMessage
-				immatureTestInstructionContainerInformationMessageGrpc = &fenixExecutionWorkerGrpcApi.ImmatureTestInstructionContainerInformationMessage{
+				var immatureTestInstructionContainerInformationMessageGrpc *fenixTestCaseBuilderServerGrpcApi.SupportedImmatureTestInstructionContainerInformationMessage
+				immatureTestInstructionContainerInformationMessageGrpc = &fenixTestCaseBuilderServerGrpcApi.SupportedImmatureTestInstructionContainerInformationMessage{
 					DomainUUID:                            string(immatureTestInstructionContainerInformationMessage.DomainUUID),
 					DomainName:                            string(immatureTestInstructionContainerInformationMessage.DomainName),
 					TestInstructionContainerUUID:          string(immatureTestInstructionContainerInformationMessage.TestInstructionContainerUUID),
@@ -215,12 +217,12 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcMessage(
 			}
 
 			// Loop and Create 'ImmatureElementModel' for 'testInstructionContainerInstanceVersionMessageGrpc'
-			var immatureElementModelMessagesGrpc []*fenixExecutionWorkerGrpcApi.ImmatureElementModelMessage
+			var immatureElementModelMessagesGrpc []*fenixTestCaseBuilderServerGrpcApi.SupportedImmatureElementModelMessage
 			for _, immatureElementModel := range testInstructionContainerInstanceVersionMessage.TestInstructionContainerInstance.ImmatureElementModel {
 
 				// Create the gRPC-version of the message
-				var immatureElementModelMessageGrpc *fenixExecutionWorkerGrpcApi.ImmatureElementModelMessage
-				immatureElementModelMessageGrpc = &fenixExecutionWorkerGrpcApi.ImmatureElementModelMessage{
+				var immatureElementModelMessageGrpc *fenixTestCaseBuilderServerGrpcApi.SupportedImmatureElementModelMessage
+				immatureElementModelMessageGrpc = &fenixTestCaseBuilderServerGrpcApi.SupportedImmatureElementModelMessage{
 					DomainUUID:               string(immatureElementModel.DomainUUID),
 					DomainName:               string(immatureElementModel.DomainName),
 					ImmatureElementUUID:      string(immatureElementModel.ImmatureElementUUID),
@@ -240,10 +242,10 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcMessage(
 			}
 
 			// Create TestInstructionContainerInstance to be converted into a gRPC-version
-			var testInstructionContainerInstanceVersionMessageGrpc *fenixExecutionWorkerGrpcApi.TestInstructionContainerInstanceVersionMessage
-			testInstructionContainerInstanceVersionMessageGrpc = &fenixExecutionWorkerGrpcApi.TestInstructionContainerInstanceVersionMessage{
-				TestInstructionContainerInstance: &fenixExecutionWorkerGrpcApi.TestInstructionContainerMessage{
-					TestInstructionContainer: &fenixExecutionWorkerGrpcApi.TestInstructionContainerBaseMessage{
+			var testInstructionContainerInstanceVersionMessageGrpc *fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionContainerInstanceVersionMessage
+			testInstructionContainerInstanceVersionMessageGrpc = &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionContainerInstanceVersionMessage{
+				TestInstructionContainerInstance: &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionContainerMessage{
+					TestInstructionContainer: &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionContainerBaseMessage{
 						DomainUUID:                            string(testInstructionContainerInstanceVersionMessage.TestInstructionContainerInstance.TestInstructionContainer.DomainUUID),
 						DomainName:                            string(testInstructionContainerInstanceVersionMessage.TestInstructionContainerInstance.TestInstructionContainer.DomainName),
 						TestInstructionContainerUUID:          string(testInstructionContainerInstanceVersionMessage.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerUUID),
@@ -259,7 +261,7 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcMessage(
 						UpdatedTimeStamp:                      string(testInstructionContainerInstanceVersionMessage.TestInstructionContainerInstance.TestInstructionContainer.UpdatedTimeStamp),
 						ChildrenIsParallelProcessed:           testInstructionContainerInstanceVersionMessage.TestInstructionContainerInstance.TestInstructionContainer.ChildrenIsParallelProcessed,
 					},
-					BasicTestInstructionContainerInformation: &fenixExecutionWorkerGrpcApi.BasicTestInstructionContainerInformationMessage{
+					BasicTestInstructionContainerInformation: &fenixTestCaseBuilderServerGrpcApi.SupportedBasicTestInstructionContainerInformationMessage{
 						DomainUUID:                            string(testInstructionContainerInstanceVersionMessage.TestInstructionContainerInstance.BasicTestInstructionContainerInformation.DomainUUID),
 						DomainName:                            string(testInstructionContainerInstanceVersionMessage.TestInstructionContainerInstance.BasicTestInstructionContainerInformation.DomainName),
 						TestInstructionContainerUUID:          string(testInstructionContainerInstanceVersionMessage.TestInstructionContainerInstance.BasicTestInstructionContainerInformation.TestInstructionContainerUUID),
@@ -293,8 +295,8 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcMessage(
 		}
 
 		// Create the object to be saved in Map
-		var testInstructionContainerInstanceVersionsGrpc *fenixExecutionWorkerGrpcApi.TestInstructionContainerInstanceVersionsMessage
-		testInstructionContainerInstanceVersionsGrpc = &fenixExecutionWorkerGrpcApi.TestInstructionContainerInstanceVersionsMessage{
+		var testInstructionContainerInstanceVersionsGrpc *fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionContainerInstanceVersionsMessage
+		testInstructionContainerInstanceVersionsGrpc = &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionContainerInstanceVersionsMessage{
 			TestInstructionContainerVersions: testInstructionContainerInstanceVersionMessagesGrpc,
 			TestInstructionVersionsHash:      testInstructionContainerInstanceVersionsMessage.TestInstructionContainerVersionsHash,
 		}
@@ -306,11 +308,11 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcMessage(
 
 	// Convert Allowed Users into gRPC-message-version
 	// Loop all TestInstructionContainerInstanceVersionsMessages
-	var allowedUsersGrpc []*fenixExecutionWorkerGrpcApi.AllowedUserMessage
+	var allowedUsersGrpc []*fenixTestCaseBuilderServerGrpcApi.SupportedAllowedUserMessage
 	for _, allowedUser := range testInstructionsAndTestInstructionContainersMessage.AllowedUsers.AllowedUsers {
 
-		var allowedUserGrpc *fenixExecutionWorkerGrpcApi.AllowedUserMessage
-		allowedUserGrpc = &fenixExecutionWorkerGrpcApi.AllowedUserMessage{
+		var allowedUserGrpc *fenixTestCaseBuilderServerGrpcApi.SupportedAllowedUserMessage
+		allowedUserGrpc = &fenixTestCaseBuilderServerGrpcApi.SupportedAllowedUserMessage{
 			UserIdOnComputer:     allowedUser.UserIdOnComputer,
 			GCPAuthenticatedUser: allowedUser.GCPAuthenticatedUser,
 			UserEmail:            allowedUser.UserEmail,
@@ -323,20 +325,20 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcMessage(
 	}
 
 	// Create the full gRPC message for all supported TestInstructions, TestInstructionContainers and Allowed Users
-	supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage = &fenixExecutionWorkerGrpcApi.SupportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage{
-		ClientSystemIdentification: &fenixExecutionWorkerGrpcApi.ClientSystemIdentificationMessage{
+	supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage = &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage{
+		ClientSystemIdentification: &fenixTestCaseBuilderServerGrpcApi.ClientSystemIdentificationMessage{
 			DomainUuid:                   domainUuid,
-			ProtoFileVersionUsedByClient: fenixExecutionWorkerGrpcApi.CurrentFenixExecutionWorkerProtoFileVersionEnum(GetHighestExecutionWorkerProtoFileVersion()),
+			ProtoFileVersionUsedByClient: fenixTestCaseBuilderServerGrpcApi.CurrentFenixExecutionWorkerProtoFileVersionEnum(GetHighestExecutionWorkerProtoFileVersion()),
 		},
-		TestInstructions: &fenixExecutionWorkerGrpcApi.SupportedTestInstructionsMessage{
+		TestInstructions: &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionsMessage{
 			TestInstructionsMap:  testInstructionInstanceVersionsMessageMap,
 			TestInstructionsHash: testInstructionsAndTestInstructionContainersMessage.TestInstructions.TestInstructionsHash,
 		},
-		TestInstructionContainers: &fenixExecutionWorkerGrpcApi.SupportedTestInstructionContainersMessage{
+		TestInstructionContainers: &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionContainersMessage{
 			TestInstructionsMap:           testInstructionContainerInstanceVersionsMessageMap,
 			TestInstructionContainersHash: testInstructionsAndTestInstructionContainersMessage.TestInstructionContainers.TestInstructionContainersHash,
 		},
-		AllowedUsers: &fenixExecutionWorkerGrpcApi.SupportedAllowedUsersMessage{
+		AllowedUsers: &fenixTestCaseBuilderServerGrpcApi.SupportedAllowedUsersMessage{
 			AllowedUsers:     allowedUsersGrpc,
 			AllowedUsersHash: testInstructionsAndTestInstructionContainersMessage.AllowedUsers.AllowedUsersHash,
 		},
