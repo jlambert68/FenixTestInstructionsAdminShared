@@ -328,7 +328,7 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 	supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage = &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage{
 		ClientSystemIdentification: &fenixTestCaseBuilderServerGrpcApi.ClientSystemIdentificationMessage{
 			DomainUuid:                   domainUuid,
-			ProtoFileVersionUsedByClient: fenixTestCaseBuilderServerGrpcApi.CurrentFenixExecutionWorkerProtoFileVersionEnum(GetHighestExecutionWorkerProtoFileVersion()),
+			ProtoFileVersionUsedByClient: fenixTestCaseBuilderServerGrpcApi.CurrentFenixTestCaseBuilderProtoFileVersionEnum(GetHighestBuilderProtoFileVersion()),
 		},
 		TestInstructions: &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionsMessage{
 			TestInstructionsMap:  testInstructionInstanceVersionsMessageMap,

@@ -2,6 +2,7 @@ package shared_code
 
 import (
 	fenixExecutionWorkerGrpcApi "github.com/jlambert68/FenixGrpcApi/FenixExecutionServer/fenixExecutionWorkerGrpcApi/go_grpc_api"
+	fenixTestCaseBuilderServerGrpcApi "github.com/jlambert68/FenixGrpcApi/FenixTestCaseBuilderServer/fenixTestCaseBuilderServerGrpcApi/go_grpc_api"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"log"
 	"os"
@@ -63,6 +64,30 @@ func GetHighestExecutionWorkerProtoFileVersion() int32 {
 	highestExecutionWorkerProtoFileVersion = maxValue
 
 	return highestExecutionWorkerProtoFileVersion
+}
+
+// GetHighestExecutionBuilderProtoFileVersion
+// Get the highest GetHighestExecutionBuilderProtoFileVersion for TestCase Builder Server
+func GetHighestBuilderProtoFileVersion() int32 {
+
+	// Check if there already is a 'highestExecutionBuilderProtoFileVersion' saved, if so use that one
+	if highestExecutionBuilderProtoFileVersion != -1 {
+		return highestExecutionBuilderProtoFileVersion
+	}
+
+	// Find the highest value for proto-file version
+	var maxValue int32
+	maxValue = 0
+
+	for _, v := range fenixTestCaseBuilderServerGrpcApi.CurrentFenixTestCaseBuilderProtoFileVersionEnum_value {
+		if v > maxValue {
+			maxValue = v
+		}
+	}
+
+	highestExecutionBuilderProtoFileVersion = maxValue
+
+	return highestExecutionBuilderProtoFileVersion
 }
 
 // MustGetenv
