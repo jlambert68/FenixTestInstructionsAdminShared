@@ -324,6 +324,14 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 		allowedUsersGrpc = append(allowedUsersGrpc, allowedUserGrpc)
 	}
 
+	// Convert Connector-Domain-info into gRPC-message-version
+	var connectorsDomainGrpc *fenixTestCaseBuilderServerGrpcApi.SupportedConnectorDomainMessage
+	connectorsDomainGrpc = &fenixTestCaseBuilderServerGrpcApi.SupportedConnectorDomainMessage{
+		ConnectorsDomainUUID: testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainUUID,
+		ConnectorsDomainName: testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainName,
+		ConnectorsDomainHash: testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainHash,
+	}
+
 	// Create the full gRPC message for all supported TestInstructions, TestInstructionContainers and Allowed Users
 	supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage = &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage{
 		ClientSystemIdentification: &fenixTestCaseBuilderServerGrpcApi.ClientSystemIdentificationMessage{
@@ -345,6 +353,7 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 		MessageCreationTimeStamp:                                        timestamppb.New(testInstructionsAndTestInstructionContainersMessage.MessageCreationTimeStamp),
 		TestInstructionsAndTestInstructionsContainersMessageHash:        testInstructionsAndTestInstructionContainersMessage.TestInstructionsAndTestInstructionsContainersAndUsersMessageHash,
 		ForceNewBaseLineForTestInstructionsAndTestInstructionContainers: testInstructionsAndTestInstructionContainersMessage.ForceNewBaseLineForTestInstructionsAndTestInstructionContainers,
+		ConnectorDomain: connectorsDomainGrpc,
 	}
 
 	return supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage, err

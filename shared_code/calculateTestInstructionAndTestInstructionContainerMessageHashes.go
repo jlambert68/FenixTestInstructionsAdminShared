@@ -153,6 +153,17 @@ func CalculateTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 	// Add hash for all AllowedUsers-message
 	testInstructionsAndTestInstructionContainersMessage.AllowedUsers.AllowedUsersHash = hashedValue
 
+	// Create Hash for Connectors Domain-information
+	var connectorsDomainInformationSlice []string
+	connectorsDomainInformationSlice = append(connectorsDomainInformationSlice, testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainUUID)
+	connectorsDomainInformationSlice = append(connectorsDomainInformationSlice, testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainName)
+
+	// Hash all values in slice with value for Domain belongings for the Connector
+	hashedValue = fenixSyncShared.HashValues(connectorsDomainInformationSlice, true)
+
+	// Set Hash for ConnectorsDomain-information
+	testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainHash = hashedValue
+
 	// Create the full Message Hash
 	var messageHash []string
 
@@ -164,6 +175,9 @@ func CalculateTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 
 	// Append AllowedUsers-hash
 	messageHash = append(messageHash, testInstructionsAndTestInstructionContainersMessage.AllowedUsers.AllowedUsersHash)
+
+	// Append Connector-Domain-hash
+	messageHash = append(messageHash, testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainHash)
 
 	// Calculate message Hash
 	hashedValue = fenixSyncShared.HashValues(messageHash, false)

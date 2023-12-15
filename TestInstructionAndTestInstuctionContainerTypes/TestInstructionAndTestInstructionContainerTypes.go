@@ -103,6 +103,14 @@ type AllowedUserStruct struct {
 	UserLastName         string `json:"UserLastName"`
 }
 
+// ConnectorsDomainStruct
+// Keeps the information about what domain the Connector belongs to
+type ConnectorsDomainStruct struct {
+	ConnectorsDomainUUID string `json:"ConnectorsDomainUUID"`
+	ConnectorsDomainName string `json:"ConnectorsDomainName"`
+	ConnectorsDomainHash string `json:"ConnectorsDomainHash"`
+}
+
 // TestInstructionsAndTestInstructionsContainersStruct
 // Struct for all TestInstructions and TestInstructionsContainers from a "System" that should be sent to Fenix backen
 type TestInstructionsAndTestInstructionsContainersStruct struct {
@@ -112,4 +120,5 @@ type TestInstructionsAndTestInstructionsContainersStruct struct {
 	MessageCreationTimeStamp                                         time.Time                        `json:"MessageCreationTimeStamp"`
 	TestInstructionsAndTestInstructionsContainersAndUsersMessageHash string                           `json:"TestInstructionsAndTestInstructionsContainersAndUsersMessageHash"` // SHA256(TestInstructionsHash concat TestInstructionContainersHash)
 	ForceNewBaseLineForTestInstructionsAndTestInstructionContainers  bool                             `json:"ForceNewBaseLineForTestInstructionsAndTestInstructionContainers"`
+	ConnectorsDomain                                                 ConnectorsDomainStruct           `json:"ConnectorsDomain"`
 }

@@ -3,7 +3,7 @@ module github.com/jlambert68/FenixTestInstructionsAdminShared
 go 1.21
 
 require (
-	github.com/jlambert68/FenixGrpcApi v0.0.0-20231215082104-ddec62bbb89c
+	github.com/jlambert68/FenixGrpcApi v0.0.0-20231215160546-f65965881a79
 	github.com/jlambert68/FenixSyncShared v0.0.0-20231023123349-e891692cede8
 	google.golang.org/protobuf v1.31.0
 )

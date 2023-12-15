@@ -259,6 +259,17 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 	// Set the new Hash
 	testInstructionsAndTestInstructionContainersMessageToCheck.AllowedUsers.AllowedUsersHash = hashedValue
 
+	// Create Hash for Connectors Domain-information
+	var connectorsDomainInformationSlice []string
+	connectorsDomainInformationSlice = append(connectorsDomainInformationSlice, testInstructionsAndTestInstructionContainersMessageToCheck.ConnectorsDomain.ConnectorsDomainUUID)
+	connectorsDomainInformationSlice = append(connectorsDomainInformationSlice, testInstructionsAndTestInstructionContainersMessageToCheck.ConnectorsDomain.ConnectorsDomainName)
+
+	// Hash all values in slice with value for Domain belongings for the Connector
+	hashedValue = fenixSyncShared.HashValues(connectorsDomainInformationSlice, true)
+
+	// Set Hash for ConnectorsDomain-information
+	testInstructionsAndTestInstructionContainersMessageToCheck.ConnectorsDomain.ConnectorsDomainHash = hashedValue
+
 	// Create the full Message Hash
 	var messageHash []string
 
