@@ -282,6 +282,9 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 	// Append AllowedUsers-hash
 	messageHash = append(messageHash, testInstructionsAndTestInstructionContainersMessageToCheck.AllowedUsers.AllowedUsersHash)
 
+	// Append Connector-Domain-hash
+	messageHash = append(messageHash, testInstructionsAndTestInstructionContainersMessageToCheck.ConnectorsDomain.ConnectorsDomainHash)
+
 	// Calculate message Hash
 	hashedValue = fenixSyncShared.HashValues(messageHash, false)
 
