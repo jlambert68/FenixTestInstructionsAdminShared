@@ -155,8 +155,12 @@ func CalculateTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 
 	// Create Hash for Connectors Domain-information
 	var connectorsDomainInformationSlice []string
-	connectorsDomainInformationSlice = append(connectorsDomainInformationSlice, testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainUUID)
-	connectorsDomainInformationSlice = append(connectorsDomainInformationSlice, testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainName)
+	var connectorsDomainUUIDAsString string
+	var connectorsDomainNameAsString string
+	connectorsDomainUUIDAsString = string(testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainUUID)
+	connectorsDomainNameAsString = string(testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainName)
+	connectorsDomainInformationSlice = append(connectorsDomainInformationSlice, connectorsDomainUUIDAsString)
+	connectorsDomainInformationSlice = append(connectorsDomainInformationSlice, connectorsDomainNameAsString)
 
 	// Hash all values in slice with value for Domain belongings for the Connector
 	hashedValue = fenixSyncShared.HashValues(connectorsDomainInformationSlice, true)
