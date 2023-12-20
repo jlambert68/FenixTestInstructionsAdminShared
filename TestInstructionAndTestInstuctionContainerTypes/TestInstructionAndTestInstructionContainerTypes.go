@@ -106,9 +106,9 @@ type AllowedUserStruct struct {
 // ConnectorsDomainStruct
 // Keeps the information about what domain the Connector belongs to
 type ConnectorsDomainStruct struct {
-	ConnectorsDomainUUID string `json:"ConnectorsDomainUUID"`
-	ConnectorsDomainName string `json:"ConnectorsDomainName"`
-	ConnectorsDomainHash string `json:"ConnectorsDomainHash"`
+	ConnectorsDomainUUID TypeAndStructs.DomainUUIDType `json:"ConnectorsDomainUUID"`
+	ConnectorsDomainName TypeAndStructs.DomainNameType `json:"ConnectorsDomainName"`
+	ConnectorsDomainHash string                        `json:"ConnectorsDomainHash"`
 }
 
 // TestInstructionsAndTestInstructionsContainersStruct

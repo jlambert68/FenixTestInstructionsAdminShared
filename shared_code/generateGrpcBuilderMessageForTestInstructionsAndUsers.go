@@ -327,8 +327,8 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 	// Convert Connector-Domain-info into gRPC-message-version
 	var connectorsDomainGrpc *fenixTestCaseBuilderServerGrpcApi.SupportedConnectorDomainMessage
 	connectorsDomainGrpc = &fenixTestCaseBuilderServerGrpcApi.SupportedConnectorDomainMessage{
-		ConnectorsDomainUUID: testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainUUID,
-		ConnectorsDomainName: testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainName,
+		ConnectorsDomainUUID: string(testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainUUID),
+		ConnectorsDomainName: string(testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainName),
 		ConnectorsDomainHash: testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainHash,
 	}
 
