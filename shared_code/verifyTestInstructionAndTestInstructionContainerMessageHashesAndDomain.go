@@ -5,12 +5,15 @@ import (
 	"fmt"
 	"github.com/jlambert68/FenixSyncShared"
 	"github.com/jlambert68/FenixTestInstructionsAdminShared/TestInstructionAndTestInstuctionContainerTypes"
+	"github.com/jlambert68/FenixTestInstructionsAdminShared/TypeAndStructs"
 )
 
-// VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes
+// VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDomain
 // Verifies the hashes for the test instructions, test instruction containers, and allowed users in the
-// given gRPC-message and compare to calculates Hashes
-func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
+// given gRPC-message and compare to calculates Hashes.
+// This functions also verify that the same DomainUUID is used everywhere in the message
+func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDomain(
+	domainUUIDToVerify TypeAndStructs.DomainUUIDType,
 	testInstructionsAndTestInstructionContainersMessageToCheck *TestInstructionAndTestInstuctionContainerTypes.TestInstructionsAndTestInstructionsContainersStruct) (errorSlice []error) {
 
 	// Used for converting before hashing and when hashing
@@ -20,7 +23,7 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 
 	// Errors that will be created when comparing calculated hash to already existing Hash sare stored in this slice
 	var err error
-	var wrongHashesSlice []error
+	var wrongHashesOrDomainUUIDSlice []error
 
 	// Loop TestInstruction
 	var testInstructionInstancesHashesSlice []string
@@ -68,7 +71,7 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 					hashedValue)
 
 				// Append Error to slice with Errors
-				wrongHashesSlice = append(wrongHashesSlice, newHashError)
+				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
 			}
 
 			// Set the new Hash
@@ -77,6 +80,102 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 			// Add the hash to slice of Hashes for TestInstInstructionVersions
 			testInstructionVersionsHashesSlice = append(testInstructionVersionsHashesSlice, hashedValue)
 
+			// Verify if supported DomainUUID is the same that was received via gRPC-message for specific TestInstructionInstanceVersion
+			// TestInstruction-Struct
+			if tempTestInstructionVersion.TestInstructionInstance.TestInstruction.DomainUUID != domainUUIDToVerify {
+				var newDomainError error
+				newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstruction(TestInstruction-Struct) "+
+					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionUUID,
+					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionName,
+					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MajorVersionNumber,
+					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MinorVersionNumber,
+					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.DomainUUID,
+					domainUUIDToVerify)
+
+				// Append Error to slice with Errors
+				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
+			}
+
+			// Verify if supported DomainUUID is the same that was received via gRPC-message for specific TestInstructionInstanceVersion
+			// BasicTestInstructionInformation-struct
+			if tempTestInstructionVersion.TestInstructionInstance.BasicTestInstructionInformation.DomainUUID != domainUUIDToVerify {
+				var newDomainError error
+				newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstruction(BasicTestInstructionInformation-struct) "+
+					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionUUID,
+					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionName,
+					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MajorVersionNumber,
+					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MinorVersionNumber,
+					tempTestInstructionVersion.TestInstructionInstance.BasicTestInstructionInformation.DomainUUID,
+					domainUUIDToVerify)
+
+				// Append Error to slice with Errors
+				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
+			}
+
+			// Verify if supported DomainUUID is the same that was received via gRPC-message for specific TestInstructionInstanceVersion
+			// Domains used within ImmatureTestInstructionInformation
+			for slicePosition, tempImmatureTestInstructionInformation := range tempTestInstructionVersion.TestInstructionInstance.ImmatureTestInstructionInformation {
+
+				if tempImmatureTestInstructionInformation.DomainUUID != domainUUIDToVerify {
+					var newDomainError error
+					newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstruction(ImmatureTestInstructionInformation, ArrayPosition=%d) "+
+						"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+						slicePosition,
+						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionUUID,
+						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionName,
+						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MajorVersionNumber,
+						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MinorVersionNumber,
+						tempImmatureTestInstructionInformation.DomainUUID,
+						domainUUIDToVerify)
+
+					// Append Error to slice with Errors
+					wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
+				}
+			}
+
+			// Verify if supported DomainUUID is the same that was received via gRPC-message for specific TestInstructionInstanceVersion
+			// Domains used within ImmatureElementModel
+			for slicePosition, tempImmatureElementModel := range tempTestInstructionVersion.TestInstructionInstance.ImmatureElementModel {
+
+				if tempImmatureElementModel.DomainUUID != domainUUIDToVerify {
+					var newDomainError error
+					newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstruction(ImmatureElementModel, ArrayPosition=%d) "+
+						"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+						slicePosition,
+						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionUUID,
+						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionName,
+						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MajorVersionNumber,
+						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MinorVersionNumber,
+						tempImmatureElementModel.DomainUUID,
+						domainUUIDToVerify)
+
+					// Append Error to slice with Errors
+					wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
+				}
+			}
+
+			// Verify if supported DomainUUID is the same that was received via gRPC-message for specific TestInstructionInstanceVersion
+			// Domains used within TestInstructionAttribute
+			for slicePosition, tempTestInstructionAttribute := range tempTestInstructionVersion.TestInstructionInstance.TestInstructionAttribute {
+
+				if tempTestInstructionAttribute.DomainUUID != domainUUIDToVerify {
+					var newDomainError error
+					newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstruction(TestInstructionAttribute, ArrayPosition=%d) "+
+						"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+						slicePosition,
+						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionUUID,
+						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionName,
+						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MajorVersionNumber,
+						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MinorVersionNumber,
+						tempTestInstructionAttribute.DomainUUID,
+						domainUUIDToVerify)
+
+					// Append Error to slice with Errors
+					wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
+				}
+			}
 		}
 		// Hash all values in slice with hashes for TestInstInstructionVersions
 		hashedValue = fenixSyncShared.HashValues(testInstructionVersionsHashesSlice, false)
@@ -92,7 +191,7 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 				hashedValue)
 
 			// Append Error to slice with Errors
-			wrongHashesSlice = append(wrongHashesSlice, newHashError)
+			wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
 		}
 
 		// Set the new Hash
@@ -115,7 +214,7 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 			hashedValue)
 
 		// Append Error to slice with Errors
-		wrongHashesSlice = append(wrongHashesSlice, newHashError)
+		wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
 	}
 
 	// Set the new Hash
@@ -167,7 +266,7 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 					hashedValue)
 
 				// Append Error to slice with Errors
-				wrongHashesSlice = append(wrongHashesSlice, newHashError)
+				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
 			}
 
 			// Set the new Hash
@@ -176,7 +275,83 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 			// Add the hash to slice of Hashes for TestInstInstructionVersions
 			TestInstructionContainerVersionsHashesSlice = append(TestInstructionContainerVersionsHashesSlice, hashedValue)
 
+			// Verify if supported DomainUUID is the same that was received via gRPC-message for specific TestInstructionContainerInstanceVersion
+			// TestInstructionContainer-Struct
+			if tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.DomainUUID != domainUUIDToVerify {
+				var newDomainError error
+				newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstructionContainer(TestInstructionContainer-Struct) "+
+					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerUUID,
+					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerName,
+					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MajorVersionNumber,
+					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MinorVersionNumber,
+					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.DomainUUID,
+					domainUUIDToVerify)
+
+				// Append Error to slice with Errors
+				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
+			}
+
+			// Verify if supported DomainUUID is the same that was received via gRPC-message for specific TestInstructionContainerInstanceVersion
+			// BasicTestInstructionContainerInformation-struct
+			if tempTestInstructionContainerVersion.TestInstructionContainerInstance.BasicTestInstructionContainerInformation.DomainUUID != domainUUIDToVerify {
+				var newDomainError error
+				newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstructionContainer(BasicTestInstructionContainerInformation-struct) "+
+					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerUUID,
+					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerName,
+					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MajorVersionNumber,
+					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MinorVersionNumber,
+					tempTestInstructionContainerVersion.TestInstructionContainerInstance.BasicTestInstructionContainerInformation.DomainUUID,
+					domainUUIDToVerify)
+
+				// Append Error to slice with Errors
+				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
+			}
+
+			// Verify if supported DomainUUID is the same that was received via gRPC-message for specific TestInstructionContainerInstanceVersion
+			// Domains used within ImmatureTestInstructionInformation
+			for slicePosition, tempImmatureTestInstructionContainer := range tempTestInstructionContainerVersion.TestInstructionContainerInstance.ImmatureTestInstructionContainer {
+
+				if tempImmatureTestInstructionContainer.DomainUUID != domainUUIDToVerify {
+					var newDomainError error
+					newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstructionContainer(ImmatureTestInstructionInformation, ArrayPosition=%d) "+
+						"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+						slicePosition,
+						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerUUID,
+						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerName,
+						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MajorVersionNumber,
+						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MinorVersionNumber,
+						tempImmatureTestInstructionContainer.DomainUUID,
+						domainUUIDToVerify)
+
+					// Append Error to slice with Errors
+					wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
+				}
+			}
+
+			// Verify if supported DomainUUID is the same that was received via gRPC-message for specific TestInstructionContainerInstanceVersion
+			// Domains used within ImmatureElementModel
+			for slicePosition, tempImmatureElementModel := range tempTestInstructionContainerVersion.TestInstructionContainerInstance.ImmatureElementModel {
+
+				if tempImmatureElementModel.DomainUUID != domainUUIDToVerify {
+					var newDomainError error
+					newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstructionContainer(ImmatureElementModel, ArrayPosition=%d) "+
+						"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+						slicePosition,
+						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerUUID,
+						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerName,
+						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MajorVersionNumber,
+						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MinorVersionNumber,
+						tempImmatureElementModel.DomainUUID,
+						domainUUIDToVerify)
+
+					// Append Error to slice with Errors
+					wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
+				}
+			}
 		}
+
 		// Hash all values in slice with hashes for TestInstInstructionVersions
 		hashedValue = fenixSyncShared.HashValues(TestInstructionContainerVersionsHashesSlice, false)
 
@@ -191,7 +366,7 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 				hashedValue)
 
 			// Append Error to slice with Errors
-			wrongHashesSlice = append(wrongHashesSlice, newHashError)
+			wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
 		}
 
 		// Set the new Hash
@@ -214,7 +389,7 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 			hashedValue)
 
 		// Append Error to slice with Errors
-		wrongHashesSlice = append(wrongHashesSlice, newHashError)
+		wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
 	}
 
 	// Set the new Hash
@@ -253,7 +428,7 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 			hashedValue)
 
 		// Append Error to slice with Errors
-		wrongHashesSlice = append(wrongHashesSlice, newHashError)
+		wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
 	}
 
 	// Set the new Hash
@@ -301,12 +476,24 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 			hashedValue)
 
 		// Append Error to slice with Errors
-		wrongHashesSlice = append(wrongHashesSlice, newHashError)
+		wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
 	}
 
 	// Set the new Hash
 	testInstructionsAndTestInstructionContainersMessageToCheck.TestInstructionsAndTestInstructionsContainersAndUsersMessageHash = hashedValue
 
-	return wrongHashesSlice
+	// Verify if supported DomainUUID is the same that was received via gRPC-message for ConnectorDomain
+	if testInstructionsAndTestInstructionContainersMessageToCheck.ConnectorsDomain.ConnectorsDomainUUID != domainUUIDToVerify {
+		var newDomainError error
+		newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for ConnectorDomain. "+
+			"Got DomainUUID=%s but supported DomainUUID=%s. ",
+			testInstructionsAndTestInstructionContainersMessageToCheck.ConnectorsDomain.ConnectorsDomainUUID,
+			domainUUIDToVerify)
+
+		// Append Error to slice with Errors
+		wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
+	}
+
+	return wrongHashesOrDomainUUIDSlice
 
 }
