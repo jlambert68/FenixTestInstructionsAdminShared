@@ -318,11 +318,11 @@ func GenerateStandardFromGrpcBuilderMessageForTestInstructionsAndUsers(
 			UserFirstName:        allowedUserGrPc.UserFirstName,
 			UserLastName:         allowedUserGrPc.UserLastName,
 			UserAuthorizationRights: &TestInstructionAndTestInstuctionContainerTypes.UserAuthorizationRightsStruct{
-				CanListAndViewTestCaseOwnedByThisDomain:                    false,
-				CanBuildAndSaveTestCaseOwnedByThisDomain:                   false,
-				CanListAndViewTestCaseHavingTIandTICFromThisDomain:         false,
-				CanListAndViewTestCaseHavingTIandTICFromThisDomainExtended: false,
-				CanBuildAndSaveTestCaseHavingTIandTICFromThisDomain:        false,
+				CanListAndViewTestCaseOwnedByThisDomain:                    allowedUserGrPc.UserAuthorizationRights.CanListAndViewTestCaseOwnedByThisDomain,
+				CanBuildAndSaveTestCaseOwnedByThisDomain:                   allowedUserGrPc.UserAuthorizationRights.CanBuildAndSaveTestCaseOwnedByThisDomain,
+				CanListAndViewTestCaseHavingTIandTICFromThisDomain:         allowedUserGrPc.UserAuthorizationRights.CanListAndViewTestCaseHavingTIandTICFromThisDomain,
+				CanListAndViewTestCaseHavingTIandTICFromThisDomainExtended: allowedUserGrPc.UserAuthorizationRights.CanListAndViewTestCaseHavingTIandTICFromThisDomainExtended,
+				CanBuildAndSaveTestCaseHavingTIandTICFromThisDomain:        allowedUserGrPc.UserAuthorizationRights.CanBuildAndSaveTestCaseHavingTIandTICFromThisDomain,
 			},
 		}
 
