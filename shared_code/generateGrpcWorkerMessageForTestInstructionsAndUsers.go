@@ -318,12 +318,18 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcWorkerMessage(
 			UserEmail:            allowedUser.UserEmail,
 			UserFirstName:        allowedUser.UserFirstName,
 			UserLastName:         allowedUser.UserLastName,
+			UserAuthorizationRights: &fenixExecutionWorkerGrpcApi.UserAuthorizationRightsMessage{
+				CanListAndViewTestCaseOwnedByThisDomain:                    allowedUser.UserAuthorizationRights.CanListAndViewTestCaseOwnedByThisDomain,
+				CanBuildAndSaveTestCaseOwnedByThisDomain:                   allowedUser.UserAuthorizationRights.CanBuildAndSaveTestCaseOwnedByThisDomain,
+				CanListAndViewTestCaseHavingTIandTICFromThisDomain:         allowedUser.UserAuthorizationRights.CanListAndViewTestCaseHavingTIandTICFromThisDomain,
+				CanListAndViewTestCaseHavingTIandTICFromThisDomainExtended: allowedUser.UserAuthorizationRights.CanListAndViewTestCaseHavingTIandTICFromThisDomainExtended,
+				CanBuildAndSaveTestCaseHavingTIandTICFromThisDomain:        allowedUser.UserAuthorizationRights.CanBuildAndSaveTestCaseHavingTIandTICFromThisDomain,
+			},
 		}
 
 		// Append to slice of messages
 		allowedUsersGrpc = append(allowedUsersGrpc, allowedUserGrpc)
 	}
-
 	// Convert Connector-Domain-info into gRPC-message-version
 	var connectorsDomainGrpc *fenixExecutionWorkerGrpcApi.SupportedConnectorDomainMessage
 	connectorsDomainGrpc = &fenixExecutionWorkerGrpcApi.SupportedConnectorDomainMessage{

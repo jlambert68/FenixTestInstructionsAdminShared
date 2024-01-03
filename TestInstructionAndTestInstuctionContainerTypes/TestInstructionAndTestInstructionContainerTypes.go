@@ -96,12 +96,12 @@ type AllowedUsersStruct struct {
 // AllowedUserStruct
 // Struct containing a user that are allowed to access the connectors published TestInstructions and TestInstructionContainers
 type AllowedUserStruct struct {
-	UserIdOnComputer        string                        `json:"UserIdOnComputer"`
-	GCPAuthenticatedUser    string                        `json:"GCPAuthenticatedUser"`
-	UserEmail               string                        `json:"UserEmail"`
-	UserFirstName           string                        `json:"UserFirstName"`
-	UserLastName            string                        `json:"UserLastName"`
-	UserAuthorizationRights UserAuthorizationRightsStruct `json:"UserAuthorizationRights"`
+	UserIdOnComputer        string                         `json:"UserIdOnComputer"`
+	GCPAuthenticatedUser    string                         `json:"GCPAuthenticatedUser"`
+	UserEmail               string                         `json:"UserEmail"`
+	UserFirstName           string                         `json:"UserFirstName"`
+	UserLastName            string                         `json:"UserLastName"`
+	UserAuthorizationRights *UserAuthorizationRightsStruct `json:"UserAuthorizationRights"`
 }
 
 // UserAuthorizationRightsStruct

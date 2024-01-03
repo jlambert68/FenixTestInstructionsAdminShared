@@ -317,6 +317,13 @@ func GenerateStandardFromGrpcBuilderMessageForTestInstructionsAndUsers(
 			UserEmail:            allowedUserGrPc.UserEmail,
 			UserFirstName:        allowedUserGrPc.UserFirstName,
 			UserLastName:         allowedUserGrPc.UserLastName,
+			UserAuthorizationRights: &TestInstructionAndTestInstuctionContainerTypes.UserAuthorizationRightsStruct{
+				CanListAndViewTestCaseOwnedByThisDomain:                    false,
+				CanBuildAndSaveTestCaseOwnedByThisDomain:                   false,
+				CanListAndViewTestCaseHavingTIandTICFromThisDomain:         false,
+				CanListAndViewTestCaseHavingTIandTICFromThisDomainExtended: false,
+				CanBuildAndSaveTestCaseHavingTIandTICFromThisDomain:        false,
+			},
 		}
 
 		// Append to slice of messages

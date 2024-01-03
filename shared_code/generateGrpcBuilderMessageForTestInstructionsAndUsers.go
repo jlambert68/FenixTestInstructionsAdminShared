@@ -318,6 +318,13 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 			UserEmail:            allowedUser.UserEmail,
 			UserFirstName:        allowedUser.UserFirstName,
 			UserLastName:         allowedUser.UserLastName,
+			UserAuthorizationRights: &fenixTestCaseBuilderServerGrpcApi.UserAuthorizationRightsMessage{
+				CanListAndViewTestCaseOwnedByThisDomain:                    allowedUser.UserAuthorizationRights.CanListAndViewTestCaseOwnedByThisDomain,
+				CanBuildAndSaveTestCaseOwnedByThisDomain:                   allowedUser.UserAuthorizationRights.CanBuildAndSaveTestCaseOwnedByThisDomain,
+				CanListAndViewTestCaseHavingTIandTICFromThisDomain:         allowedUser.UserAuthorizationRights.CanListAndViewTestCaseHavingTIandTICFromThisDomain,
+				CanListAndViewTestCaseHavingTIandTICFromThisDomainExtended: allowedUser.UserAuthorizationRights.CanListAndViewTestCaseHavingTIandTICFromThisDomainExtended,
+				CanBuildAndSaveTestCaseHavingTIandTICFromThisDomain:        allowedUser.UserAuthorizationRights.CanBuildAndSaveTestCaseHavingTIandTICFromThisDomain,
+			},
 		}
 
 		// Append to slice of messages

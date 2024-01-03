@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	cloud.google.com/go/iam v1.1.5
-	github.com/jlambert68/FenixGrpcApi v0.0.0-20231228091629-c599b8acce3c
+	github.com/jlambert68/FenixGrpcApi v0.0.0-20240103122135-2db908f6e1ac
 	github.com/jlambert68/FenixSyncShared v0.0.0-20231023123349-e891692cede8
 	google.golang.org/genproto v0.0.0-20231212172506-995d672761c0
 	google.golang.org/protobuf v1.32.0
@@ -16,7 +16,6 @@ require (
 	github.com/go-gota/gota v0.12.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
-	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/s2a-go v0.1.7 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.2 // indirect
 	github.com/googleapis/gax-go/v2 v2.12.0 // indirect
