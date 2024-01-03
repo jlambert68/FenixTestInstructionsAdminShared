@@ -96,11 +96,22 @@ type AllowedUsersStruct struct {
 // AllowedUserStruct
 // Struct containing a user that are allowed to access the connectors published TestInstructions and TestInstructionContainers
 type AllowedUserStruct struct {
-	UserIdOnComputer     string `json:"UserIdOnComputer"`
-	GCPAuthenticatedUser string `json:"GCPAuthenticatedUser"`
-	UserEmail            string `json:"UserEmail"`
-	UserFirstName        string `json:"UserFirstName"`
-	UserLastName         string `json:"UserLastName"`
+	UserIdOnComputer        string                        `json:"UserIdOnComputer"`
+	GCPAuthenticatedUser    string                        `json:"GCPAuthenticatedUser"`
+	UserEmail               string                        `json:"UserEmail"`
+	UserFirstName           string                        `json:"UserFirstName"`
+	UserLastName            string                        `json:"UserLastName"`
+	UserAuthorizationRights UserAuthorizationRightsStruct `json:"UserAuthorizationRights"`
+}
+
+// UserAuthorizationRightsStruct
+// Struct defining the users right for this domain
+type UserAuthorizationRightsStruct struct {
+	CanListAndViewTestCaseOwnedByThisDomain                    bool `json:"CanListAndViewTestCaseOwnedByThisDomain"`                    // Can List and View TestCases that belongs to this domain
+	CanBuildAndSaveTestCaseOwnedByThisDomain                   bool `json:"CanBuildAndSaveTestCaseOwnedByThisDomain"`                   // Can Build, Edit and Save TestCases that belongs to this domain
+	CanListAndViewTestCaseHavingTIandTICFromThisDomain         bool `json:"CanListAndViewTestCaseHavingTIandTICFromThisDomain"`         // Can List and View TestCases having TestInstruction and TestInstructionContainers from this domain
+	CanListAndViewTestCaseHavingTIandTICFromThisDomainExtended bool `json:"CanListAndViewTestCaseHavingTIandTICFromThisDomainExtended"` // Can List and View TestCases even having TestInstruction and TestInstructionContainers from this domain even though there are other TI and TIC from other domains that the users doesn't have explicit access to
+	CanBuildAndSaveTestCaseHavingTIandTICFromThisDomain        bool `json:"CanBuildAndSaveTestCaseHavingTIandTICFromThisDomain"`        // Can Build, Edit and Save TestCases that has TestInstruction and TestInstructionContainers from this domain
 }
 
 // ConnectorsDomainStruct
