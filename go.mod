@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	cloud.google.com/go/iam v1.1.5
-	github.com/jlambert68/FenixGrpcApi v0.0.0-20240103122135-2db908f6e1ac
+	github.com/jlambert68/FenixGrpcApi v0.0.0-20240122123718-97a7a27310aa
 	github.com/jlambert68/FenixSyncShared v0.0.0-20231023123349-e891692cede8
 	google.golang.org/genproto v0.0.0-20231212172506-995d672761c0
 	google.golang.org/protobuf v1.32.0

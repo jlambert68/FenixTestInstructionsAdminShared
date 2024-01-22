@@ -118,6 +118,8 @@ func GenerateStandardFromGrpcWorkerMessageForTestInstructionsAndUsers(
 					TestInstruction: &TypeAndStructs.TestInstructionStruct{
 						DomainUUID:                   TypeAndStructs.DomainUUIDType(testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.TestInstruction.GetDomainUUID()),
 						DomainName:                   TypeAndStructs.DomainNameType(testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.TestInstruction.GetDomainName()),
+						ExecutionDomainUUID:          TypeAndStructs.DomainUUIDType(testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.TestInstruction.GetExecutionDomainUuid()),
+						ExecutionDomainName:          TypeAndStructs.DomainNameType(testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.TestInstruction.GetExecutionDomainName()),
 						TestInstructionUUID:          TypeAndStructs.OriginalElementUUIDType(testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.TestInstruction.GetTestInstructionUUID()),
 						TestInstructionName:          TypeAndStructs.TestInstructionNameType(testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.TestInstruction.GetTestInstructionName()),
 						TestInstructionTypeUUID:      TypeAndStructs.TestInstructionTypeUUIDType(testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.TestInstruction.GetTestInstructionTypeUUID()),
@@ -133,6 +135,8 @@ func GenerateStandardFromGrpcWorkerMessageForTestInstructionsAndUsers(
 					BasicTestInstructionInformation: &TypeAndStructs.BasicTestInstructionInformationStruct{
 						DomainUUID:                   TypeAndStructs.DomainUUIDType(testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.BasicTestInstructionInformation.GetDomainUUID()),
 						DomainName:                   TypeAndStructs.DomainNameType(testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.BasicTestInstructionInformation.GetDomainName()),
+						ExecutionDomainUUID:          TypeAndStructs.DomainUUIDType(testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.BasicTestInstructionInformation.GetExecutionDomainUuid()),
+						ExecutionDomainName:          TypeAndStructs.DomainNameType(testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.BasicTestInstructionInformation.GetExecutionDomainName()),
 						TestInstructionUUID:          TypeAndStructs.OriginalElementUUIDType(testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.BasicTestInstructionInformation.GetTestInstructionUUID()),
 						TestInstructionName:          TypeAndStructs.TestInstructionNameType(testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.BasicTestInstructionInformation.GetTestInstructionName()),
 						TestInstructionTypeUUID:      TypeAndStructs.TestInstructionTypeUUIDType(testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.BasicTestInstructionInformation.GetTestInstructionTypeUUID()),

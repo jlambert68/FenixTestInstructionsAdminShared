@@ -119,6 +119,8 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcWorkerMessage(
 					TestInstruction: &fenixExecutionWorkerGrpcApi.SupportedTestInstructionBaseMessage{
 						DomainUUID:                   string(testInstructionInstanceVersionMessage.TestInstructionInstance.TestInstruction.DomainUUID),
 						DomainName:                   string(testInstructionInstanceVersionMessage.TestInstructionInstance.TestInstruction.DomainName),
+						ExecutionDomainUuid:          string(testInstructionInstanceVersionMessage.TestInstructionInstance.TestInstruction.ExecutionDomainUUID),
+						ExecutionDomainName:          string(testInstructionInstanceVersionMessage.TestInstructionInstance.TestInstruction.ExecutionDomainName),
 						TestInstructionUUID:          string(testInstructionInstanceVersionMessage.TestInstructionInstance.TestInstruction.TestInstructionUUID),
 						TestInstructionName:          string(testInstructionInstanceVersionMessage.TestInstructionInstance.TestInstruction.TestInstructionName),
 						TestInstructionTypeUUID:      string(testInstructionInstanceVersionMessage.TestInstructionInstance.TestInstruction.TestInstructionTypeUUID),
@@ -134,6 +136,8 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcWorkerMessage(
 					BasicTestInstructionInformation: &fenixExecutionWorkerGrpcApi.SupportedBasicTestInstructionInformationMessage{
 						DomainUUID:                   string(testInstructionInstanceVersionMessage.TestInstructionInstance.BasicTestInstructionInformation.DomainUUID),
 						DomainName:                   string(testInstructionInstanceVersionMessage.TestInstructionInstance.BasicTestInstructionInformation.DomainName),
+						ExecutionDomainUuid:          string(testInstructionInstanceVersionMessage.TestInstructionInstance.TestInstruction.ExecutionDomainUUID),
+						ExecutionDomainName:          string(testInstructionInstanceVersionMessage.TestInstructionInstance.TestInstruction.ExecutionDomainName),
 						TestInstructionUUID:          string(testInstructionInstanceVersionMessage.TestInstructionInstance.BasicTestInstructionInformation.TestInstructionUUID),
 						TestInstructionName:          string(testInstructionInstanceVersionMessage.TestInstructionInstance.BasicTestInstructionInformation.TestInstructionName),
 						TestInstructionTypeUUID:      string(testInstructionInstanceVersionMessage.TestInstructionInstance.BasicTestInstructionInformation.TestInstructionTypeUUID),
