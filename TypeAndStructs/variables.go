@@ -54,6 +54,8 @@ type TestInstructions []TestInstructionStruct
 type TestInstructionStruct struct {
 	DomainUUID                   DomainUUIDType              `json:"DomainUuid"`
 	DomainName                   DomainNameType              `json:"DomainName"`
+	ExecutionDomainUUID          DomainUUIDType              `json:"ExecutionDomainUUID"`
+	ExecutionDomainName          DomainNameType              `json:"ExecutionDomainName"`
 	TestInstructionUUID          OriginalElementUUIDType     `json:"TestInstructionUuid"`
 	TestInstructionName          TestInstructionNameType     `json:"TestInstructionName"`
 	TestInstructionTypeUUID      TestInstructionTypeUUIDType `json:"TestInstructionTypeUuid"`
@@ -71,6 +73,8 @@ type BasicTestInstructionsInformation []BasicTestInstructionInformationStruct
 type BasicTestInstructionInformationStruct struct {
 	DomainUUID                   DomainUUIDType              `json:"DomainUuid"`
 	DomainName                   DomainNameType              `json:"DomainName"`
+	ExecutionDomainUUID          DomainUUIDType              `json:"ExecutionDomainUUID"`
+	ExecutionDomainName          DomainNameType              `json:"ExecutionDomainName"`
 	TestInstructionUUID          OriginalElementUUIDType     `json:"TestInstructionUuid"`
 	TestInstructionName          TestInstructionNameType     `json:"TestInstructionName"`
 	TestInstructionTypeUUID      TestInstructionTypeUUIDType `json:"TestInstructionTypeUuid"`
