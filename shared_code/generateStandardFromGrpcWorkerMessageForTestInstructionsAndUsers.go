@@ -345,7 +345,13 @@ func GenerateStandardFromGrpcWorkerMessageForTestInstructionsAndUsers(
 			TestInstructionContainersHash: supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage.GetTestInstructionContainers().TestInstructionContainersHash,
 		},
 		AllowedUsers: &TestInstructionAndTestInstuctionContainerTypes.AllowedUsersStruct{
-			AllowedUsers:     allowedUsers,
+			AllowedUsers: allowedUsers,
+			AllUsersAuthorizationRights: &TestInstructionAndTestInstuctionContainerTypes.AllUsersAuthorizationRightsStruct{
+				AllUsersCanListAndViewTestCaseHavingTIandTICFromThisDomain: supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage.GetAllowedUsers().
+					AllUsersAuthorizationRights.GetAllUsersCanListAndViewTestCaseHavingTIandTICFromThisDomain(),
+				AllUsersCanBuildAndSaveTestCaseHavingTIandTICFromThisDomain: supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage.GetAllowedUsers().
+					AllUsersAuthorizationRights.GetAllUsersCanBuildAndSaveTestCaseHavingTIandTICFromThisDomain(),
+			},
 			AllowedUsersHash: supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage.GetAllowedUsers().GetAllowedUsersHash(),
 		},
 		MessageCreationTimeStamp: supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage.GetMessageCreationTimeStamp().AsTime(),

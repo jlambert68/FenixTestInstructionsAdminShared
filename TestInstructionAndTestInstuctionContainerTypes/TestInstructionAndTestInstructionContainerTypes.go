@@ -89,8 +89,9 @@ type TestInstructionContainersStruct struct {
 // AllowedUsersStruct
 // Struct containing all users that are allowed to access the connectors published TestInstructions and TestInstructionContainers
 type AllowedUsersStruct struct {
-	AllowedUsers     []*AllowedUserStruct `json:"AllowedUsers"`
-	AllowedUsersHash string               `json:"AllowedUsersHash"`
+	AllowedUsers                []*AllowedUserStruct               `json:"AllowedUsers"`
+	AllUsersAuthorizationRights *AllUsersAuthorizationRightsStruct `json:"AllUsersAuthorizationRights"`
+	AllowedUsersHash            string                             `json:"AllowedUsersHash"`
 }
 
 // AllowedUserStruct
@@ -112,6 +113,13 @@ type UserAuthorizationRightsStruct struct {
 	CanListAndViewTestCaseHavingTIandTICFromThisDomain         bool `json:"CanListAndViewTestCaseHavingTIandTICFromThisDomain"`         // Can List and View TestCases having TestInstruction and TestInstructionContainers from this domain
 	CanListAndViewTestCaseHavingTIandTICFromThisDomainExtended bool `json:"CanListAndViewTestCaseHavingTIandTICFromThisDomainExtended"` // Can List and View TestCases even having TestInstruction and TestInstructionContainers from this domain even though there are other TI and TIC from other domains that the users doesn't have explicit access to
 	CanBuildAndSaveTestCaseHavingTIandTICFromThisDomain        bool `json:"CanBuildAndSaveTestCaseHavingTIandTICFromThisDomain"`        // Can Build, Edit and Save TestCases that has TestInstruction and TestInstructionContainers from this domain
+}
+
+// AllUsersAuthorizationRightsStruct
+// Struct defining rights for all users regarding this domain
+type AllUsersAuthorizationRightsStruct struct {
+	AllUsersCanListAndViewTestCaseHavingTIandTICFromThisDomain  bool `json:"AllUsersCanListAndViewTestCaseHavingTIandTICFromThisDomain"`  // All users can List and View TestCases having TestInstruction and TestInstructionContainers from this domain
+	AllUsersCanBuildAndSaveTestCaseHavingTIandTICFromThisDomain bool `json:"AllUsersCanBuildAndSaveTestCaseHavingTIandTICFromThisDomain"` // All users can Build, Edit and Save TestCases that has TestInstruction and TestInstructionContainers from this domain
 }
 
 // ConnectorsDomainStruct

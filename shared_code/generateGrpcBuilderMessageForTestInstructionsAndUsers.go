@@ -335,6 +335,15 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 		allowedUsersGrpc = append(allowedUsersGrpc, allowedUserGrpc)
 	}
 
+	// Convert AllUsersAuthorizationRights for Domain
+	var allUsersAuthorizationRightsGrpc *fenixTestCaseBuilderServerGrpcApi.AllUsersAuthorizationRightsMessage
+	allUsersAuthorizationRightsGrpc = &fenixTestCaseBuilderServerGrpcApi.AllUsersAuthorizationRightsMessage{
+		AllUsersCanListAndViewTestCaseHavingTIandTICFromThisDomain: testInstructionsAndTestInstructionContainersMessage.
+			AllowedUsers.AllUsersAuthorizationRights.AllUsersCanListAndViewTestCaseHavingTIandTICFromThisDomain,
+		AllUsersCanBuildAndSaveTestCaseHavingTIandTICFromThisDomain: testInstructionsAndTestInstructionContainersMessage.
+			AllowedUsers.AllUsersAuthorizationRights.AllUsersCanBuildAndSaveTestCaseHavingTIandTICFromThisDomain,
+	}
+
 	// Convert Connector-Domain-info into gRPC-message-version
 	var connectorsDomainGrpc *fenixTestCaseBuilderServerGrpcApi.SupportedConnectorDomainMessage
 	connectorsDomainGrpc = &fenixTestCaseBuilderServerGrpcApi.SupportedConnectorDomainMessage{
@@ -358,8 +367,9 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 			TestInstructionContainersHash: testInstructionsAndTestInstructionContainersMessage.TestInstructionContainers.TestInstructionContainersHash,
 		},
 		AllowedUsers: &fenixTestCaseBuilderServerGrpcApi.SupportedAllowedUsersMessage{
-			AllowedUsers:     allowedUsersGrpc,
-			AllowedUsersHash: testInstructionsAndTestInstructionContainersMessage.AllowedUsers.AllowedUsersHash,
+			AllowedUsers:                allowedUsersGrpc,
+			AllUsersAuthorizationRights: allUsersAuthorizationRightsGrpc,
+			AllowedUsersHash:            testInstructionsAndTestInstructionContainersMessage.AllowedUsers.AllowedUsersHash,
 		},
 		MessageCreationTimeStamp:                                        timestamppb.New(testInstructionsAndTestInstructionContainersMessage.MessageCreationTimeStamp),
 		TestInstructionsAndTestInstructionsContainersMessageHash:        testInstructionsAndTestInstructionContainersMessage.TestInstructionsAndTestInstructionsContainersAndUsersMessageHash,

@@ -6,6 +6,7 @@ import (
 	"github.com/jlambert68/FenixSyncShared"
 	"github.com/jlambert68/FenixTestInstructionsAdminShared/TestInstructionAndTestInstuctionContainerTypes"
 	"github.com/jlambert68/FenixTestInstructionsAdminShared/TypeAndStructs"
+	"strconv"
 )
 
 // VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDomain
@@ -415,6 +416,36 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 		// Add the hash to slice of Hashes for Allowed Users
 		allowedUsersHashesSlice = append(allowedUsersHashesSlice, hashedValue)
 	}
+
+	// Hash all values in slice with hashes for Allowed Users
+	var hashedValueForAllowedUsers string
+	hashedValueForAllowedUsers = fenixSyncShared.HashValues(allowedUsersHashesSlice, false)
+
+	// Create Hash for AllUsersAuthorizationRights-message
+	var allUsersAuthorizationRightsSlice []string
+	var allUsersCanListAndViewTestCaseHavingTIandTICFromThisDomainAsString string
+	var allUsersCanBuildAndSaveTestCaseHavingTIandTICFromThisDomainAsString string
+	allUsersCanListAndViewTestCaseHavingTIandTICFromThisDomainAsString = strconv.FormatBool(
+		testInstructionsAndTestInstructionContainersMessageToCheck.AllowedUsers.AllUsersAuthorizationRights.
+			AllUsersCanListAndViewTestCaseHavingTIandTICFromThisDomain)
+	allUsersCanBuildAndSaveTestCaseHavingTIandTICFromThisDomainAsString = strconv.FormatBool(
+		testInstructionsAndTestInstructionContainersMessageToCheck.AllowedUsers.AllUsersAuthorizationRights.
+			AllUsersCanBuildAndSaveTestCaseHavingTIandTICFromThisDomain)
+
+	allUsersAuthorizationRightsSlice = append(allUsersAuthorizationRightsSlice,
+		allUsersCanListAndViewTestCaseHavingTIandTICFromThisDomainAsString)
+	allUsersAuthorizationRightsSlice = append(allUsersAuthorizationRightsSlice,
+		allUsersCanBuildAndSaveTestCaseHavingTIandTICFromThisDomainAsString)
+
+	// Hash all values in slice with value for AllUsersAuthorizationRights-message
+	hashedValue = fenixSyncShared.HashValues(allUsersAuthorizationRightsSlice, true)
+
+	// Combine hashed from AllowedUsers and AllUsersAuthorizationRights
+	var combindUserSlice []string
+	combindUserSlice = append(combindUserSlice, hashedValueForAllowedUsers)
+	combindUserSlice = append(combindUserSlice, hashedValue)
+
+	hashedValue = fenixSyncShared.HashValues(combindUserSlice, false)
 
 	// Hash all values in slice with hashes for Allowed Users
 	hashedValue = fenixSyncShared.HashValues(allowedUsersHashesSlice, false)
