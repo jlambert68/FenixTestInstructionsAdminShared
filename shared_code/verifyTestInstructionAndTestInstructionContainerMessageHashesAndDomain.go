@@ -447,9 +447,6 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 
 	hashedValue = fenixSyncShared.HashValues(combindUserSlice, false)
 
-	// Hash all values in slice with hashes for Allowed Users
-	hashedValue = fenixSyncShared.HashValues(allowedUsersHashesSlice, false)
-
 	// Verify if recalculated hash is the same that was received via gRPC-message for all AllowedUsers-message
 	if testInstructionsAndTestInstructionContainersMessageToCheck.AllowedUsers.AllowedUsersHash != hashedValue {
 		var newHashError error
