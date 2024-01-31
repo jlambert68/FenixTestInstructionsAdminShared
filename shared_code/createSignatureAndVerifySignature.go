@@ -3,16 +3,22 @@ package shared_code
 import (
 	iam_credentials "cloud.google.com/go/iam/credentials/apiv1"
 	"context"
+	"crypto/tls"
 	fenixTestCaseBuilderServerGrpcApi "github.com/jlambert68/FenixGrpcApi/FenixTestCaseBuilderServer/fenixTestCaseBuilderServerGrpcApi/go_grpc_api"
 	fenixSyncShared "github.com/jlambert68/FenixSyncShared"
+	"google.golang.org/api/option"
 	iam_credentialspb "google.golang.org/genproto/googleapis/iam/credentials/v1"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
+	"log"
 )
 
 // SignMessageToProveIdentityToBuilderServer
 // Sign Message to be sent to BuilderServer
 func SignMessageToProveIdentityToBuilderServer(
 	messageToBeSigned string,
-	serviceAccountUsedForSigning string) (
+	serviceAccountUsedForSigning string,
+	signerIsRunningInGCP bool) (
 	hashOfSignature string,
 	hashedKeyId string,
 	err error) {
@@ -20,7 +26,28 @@ func SignMessageToProveIdentityToBuilderServer(
 	ctx := context.Background()
 
 	// Initialize the client
-	credsClient, err := iam_credentials.NewIamCredentialsClient(ctx)
+	var credsClient *iam_credentials.IamCredentialsClient
+	if signerIsRunningInGCP == true {
+		// Caller is running in GCP
+
+		// Set up the custom TLS configuration
+		tlsConfig := &tls.Config{
+			InsecureSkipVerify: true,
+		}
+
+		// Create a new gRPC client connection with the custom TLS settings
+		conn, err := grpc.DialContext(ctx, "iamcredentials.googleapis.com:443", grpc.WithTransportCredentials(credentials.NewTLS(tlsConfig)))
+		if err != nil {
+			log.Fatalf("Failed to dial IAM Credentials API: %v", err)
+		}
+		defer conn.Close()
+
+		credsClient, err = iam_credentials.NewIamCredentialsClient(ctx, option.WithGRPCConn(conn))
+
+	} else {
+		// Caller is running locally
+		credsClient, err = iam_credentials.NewIamCredentialsClient(ctx)
+	}
 	if err != nil {
 		return "", "", err
 	}
@@ -73,7 +100,8 @@ func VerifySignatureFromSignedMessageToProveIdentityToBuilderServer(
 	var reCreatedHashedKeyId string
 	reCreatedHashOfSignature, reCreatedHashedKeyId, err = SignMessageToProveIdentityToBuilderServer(
 		signedMessageByServiceAccountMessage.MessageToBeSigned,
-		serviceAccountUsedForSigning)
+		serviceAccountUsedForSigning,
+		true)
 
 	// Got some problem when signing the message
 	if err != nil {
