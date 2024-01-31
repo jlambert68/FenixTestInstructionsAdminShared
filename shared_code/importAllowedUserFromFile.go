@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func ParseAllowedUsersFromFile(allowedUsers []byte) (err error) {
+func ParseAllowedUsersFromEmbeddedFile(allowedUsers []byte) (err error) {
 
 	err = json.Unmarshal(allowedUsers, &AllowedUsersLoadFromJsonFile)
 
