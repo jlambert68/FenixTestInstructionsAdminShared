@@ -39,12 +39,13 @@ type TestInstructionContainerStruct struct {
 // TestInstructionInstanceVersionStruct
 // Struct for one TestInstruction, to be sent over gRPC to Fenix backend
 type TestInstructionInstanceVersionStruct struct {
-	TestInstructionInstance             *TestInstructionStruct `json:"TestInstructionInstance"`
-	TestInstructionInstanceMajorVersion int                    `json:"TestInstructionInstanceMajorVersion"`
-	TestInstructionInstanceMinorVersion int                    `json:"TestInstructionInstanceMinorVersion"`
-	Deprecated                          bool                   `json:"Deprecated"`
-	Enabled                             bool                   `json:"Enabled"`
-	TestInstructionInstanceVersionHash  string                 `json:"TestInstructionInstanceVersionHash"`
+	TestInstructionInstance             *TestInstructionStruct               `json:"TestInstructionInstance"`
+	TestInstructionInstanceMajorVersion int                                  `json:"TestInstructionInstanceMajorVersion"`
+	TestInstructionInstanceMinorVersion int                                  `json:"TestInstructionInstanceMinorVersion"`
+	Deprecated                          bool                                 `json:"Deprecated"`
+	Enabled                             bool                                 `json:"Enabled"`
+	ResponseVariablesMapStructure       *ResponseVariablesMapStructureStruct `json:"ResponseVariablesMapStructure"`
+	TestInstructionInstanceVersionHash  string                               `json:"TestInstructionInstanceVersionHash"`
 }
 
 // TestInstructionInstanceVersionsStruct
@@ -128,6 +129,20 @@ type ConnectorsDomainStruct struct {
 	ConnectorsDomainUUID TypeAndStructs.DomainUUIDType `json:"ConnectorsDomainUUID"`
 	ConnectorsDomainName TypeAndStructs.DomainNameType `json:"ConnectorsDomainName"`
 	ConnectorsDomainHash string                        `json:"ConnectorsDomainHash"`
+}
+
+// ResponseVariableStructureStruct
+// Keeps a Response variable and its Hash
+type ResponseVariableStructureStruct struct {
+	ResponseVariable     TypeAndStructs.ResponseVariableStruct `json:"ResponseVariable"`
+	ResponseVariableHash string                                `json:"ResponseVariableHash"`
+}
+
+// ResponseVariablesMapStructureStruct
+// Keeps all Response Variable for a TestInstruction
+type ResponseVariablesMapStructureStruct struct {
+	ResponseVariablesMap     map[TypeAndStructs.ResponseVariableUuidType]*ResponseVariableStructureStruct `json:"ResponseVariablesMap"`
+	ResponseVariablesMapHash string                                                                       `json:"ResponseVariablesMapHash"`
 }
 
 // TestInstructionsAndTestInstructionsContainersStruct

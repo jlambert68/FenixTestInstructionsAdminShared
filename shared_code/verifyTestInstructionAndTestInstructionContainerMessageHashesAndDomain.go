@@ -32,6 +32,7 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 
 		// For each TestInstruction loop TestInstructionVersions
 		var testInstructionVersionsHashesSlice []string
+		var testInstructionVersionsHash string
 		for _, tempTestInstructionVersion := range tempTestInstruction.TestInstructionVersions {
 
 			// Temporary set 'Hash' to a standard value to be able to recreate Hash-value
@@ -58,6 +59,82 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 
 			// Hash the json-string
 			hashedValue = fenixSyncShared.HashSingleValue(byteSliceAsString)
+
+			// Create Hashes for Response variables
+			var responseVariablesHashesSlice []string
+			for _, tempResponseVariable := range tempTestInstructionVersion.
+				ResponseVariablesMapStructure.ResponseVariablesMap {
+
+				// Convert Response Variable to byte-string and then Hash message
+				byteSlice, err = json.Marshal(&tempResponseVariable.ResponseVariable)
+				if err != nil {
+					fmt.Printf("Error: %s", err)
+					return []error{err}
+				}
+
+				// Convert byteSlice into string
+				byteSliceAsString = string(byteSlice)
+
+				// Hash the json-string
+				hashedValue = fenixSyncShared.HashSingleValue(byteSliceAsString)
+
+				// Verify if recalculated hash is the same that was received via gRPC-message for specific TestInstructionContainerInstanceVersion
+				if tempResponseVariable.ResponseVariableHash != hashedValue {
+					var newHashError error
+					newHashError = fmt.Errorf("Recalculated Hash is not the same as received Hash for ResponseVariable "+
+						"with UUID=%s, with Name=%s. Got Hash=%s but recalculated Hash=%s. ",
+						tempResponseVariable.ResponseVariable.ResponseVariableUuid,
+						tempResponseVariable.ResponseVariable.ResponseVariableName,
+						tempResponseVariable.ResponseVariableHash,
+						hashedValue)
+
+					// Append Error to slice with Errors
+					wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
+				}
+
+				// Set the new Hash
+				tempResponseVariable.ResponseVariableHash = hashedValue
+
+				// Add the hash to slice of Hashes for Response Variables
+				responseVariablesHashesSlice = append(responseVariablesHashesSlice, hashedValue)
+
+				// Store back the Response variable in the Map
+				tempTestInstructionVersion.ResponseVariablesMapStructure.
+					ResponseVariablesMap[tempResponseVariable.ResponseVariable.ResponseVariableUuid] = tempResponseVariable
+			}
+
+			// Hash all values in slice with hashes for Response variables
+			hashedValue = fenixSyncShared.HashValues(responseVariablesHashesSlice, false)
+
+			// Verify if recalculated hash is the same that was received via gRPC-message for final Response variables
+			if tempTestInstructionVersion.ResponseVariablesMapStructure.
+				ResponseVariablesMapHash != hashedValue {
+				var newHashError error
+				newHashError = fmt.Errorf("Recalculated Hash is not the same as received Hash for all ResponseVariables "+
+					"Got Hash=%s but recalculated Hash=%s. ",
+					tempTestInstructionVersion.ResponseVariablesMapStructure.
+						ResponseVariablesMapHash,
+					hashedValue)
+
+				// Append Error to slice with Errors
+				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
+			}
+
+			// Store the final Response variables Hash in the structure
+			tempTestInstructionVersion.ResponseVariablesMapStructure.
+				ResponseVariablesMapHash = hashedValue
+
+			// Calculate to total hash for TestInstructionInstance
+			var tempTotalTestInstructionInstanceVersionHash []string
+
+			// Append the hash for the TestInstructionInstance itself
+			tempTotalTestInstructionInstanceVersionHash = append(tempTotalTestInstructionInstanceVersionHash, testInstructionVersionsHash)
+
+			// Append the hash for the Response variables
+			tempTotalTestInstructionInstanceVersionHash = append(tempTotalTestInstructionInstanceVersionHash, hashedValue)
+
+			// Create the hash to be store for the complete TestInstructionInstance
+			hashedValue = fenixSyncShared.HashValues(tempTotalTestInstructionInstanceVersionHash, false)
 
 			// Verify if recalculated hash is the same that was received via gRPC-message for specific TestInstructionInstanceVersion
 			if tempTestInstructionVersion.TestInstructionInstanceVersionHash != hashedValue {
@@ -481,16 +558,20 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 	var messageHash []string
 
 	// Append TestInstructions-hash
-	messageHash = append(messageHash, testInstructionsAndTestInstructionContainersMessageToCheck.TestInstructions.TestInstructionsHash)
+	messageHash = append(messageHash, testInstructionsAndTestInstructionContainersMessageToCheck.
+		TestInstructions.TestInstructionsHash)
 
 	// Append TestInstructionContainers-hash
-	messageHash = append(messageHash, testInstructionsAndTestInstructionContainersMessageToCheck.TestInstructionContainers.TestInstructionContainersHash)
+	messageHash = append(messageHash, testInstructionsAndTestInstructionContainersMessageToCheck.
+		TestInstructionContainers.TestInstructionContainersHash)
 
 	// Append AllowedUsers-hash
-	messageHash = append(messageHash, testInstructionsAndTestInstructionContainersMessageToCheck.AllowedUsers.AllowedUsersHash)
+	messageHash = append(messageHash, testInstructionsAndTestInstructionContainersMessageToCheck.
+		AllowedUsers.AllowedUsersHash)
 
 	// Append Connector-Domain-hash
-	messageHash = append(messageHash, testInstructionsAndTestInstructionContainersMessageToCheck.ConnectorsDomain.ConnectorsDomainHash)
+	messageHash = append(messageHash, testInstructionsAndTestInstructionContainersMessageToCheck.
+		ConnectorsDomain.ConnectorsDomainHash)
 
 	// Calculate message Hash
 	hashedValue = fenixSyncShared.HashValues(messageHash, false)

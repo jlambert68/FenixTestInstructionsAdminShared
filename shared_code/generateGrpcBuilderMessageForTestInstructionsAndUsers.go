@@ -112,6 +112,34 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 				immatureElementModelMessagesGrpc = append(immatureElementModelMessagesGrpc, immatureElementModelMessageGrpc)
 			}
 
+			// Create the responseVariablesMapStructureGrpc message
+			var responseVariablesMapStructureGrpc *fenixTestCaseBuilderServerGrpcApi.SupportedResponseVariablesMapStructureMessage
+			responseVariablesMapStructureGrpc = &fenixTestCaseBuilderServerGrpcApi.SupportedResponseVariablesMapStructureMessage{
+				ResponseVariablesMap: nil,
+				ResponseVariablesMapHash: testInstructionInstanceVersionMessage.ResponseVariablesMapStructure.
+					ResponseVariablesMapHash,
+			}
+
+			// Create 'ResponseVariablesMap'
+			var responseVariablesMap map[string]*fenixTestCaseBuilderServerGrpcApi.ResponseVariableStructureMessage
+			for responseVariableUuid, responseVariable := range testInstructionInstanceVersionMessage.
+				ResponseVariablesMapStructure.ResponseVariablesMap {
+
+				var tempResponseVariable *fenixTestCaseBuilderServerGrpcApi.ResponseVariableStructureMessage
+				tempResponseVariable = &fenixTestCaseBuilderServerGrpcApi.ResponseVariableStructureMessage{
+					ResponseVariable: &fenixTestCaseBuilderServerGrpcApi.ResponseVariableMessage{
+						ResponseVariableUuid:        string(responseVariable.ResponseVariable.ResponseVariableUuid),
+						ResponseVariableName:        string(responseVariable.ResponseVariable.ResponseVariableName),
+						ResponseVariableIsMandatory: bool(responseVariable.ResponseVariable.ResponseVariableIsMandatory),
+					},
+					ResponseVariableHash: responseVariable.ResponseVariableHash,
+				}
+
+				responseVariablesMap[string(responseVariableUuid)] = tempResponseVariable
+			}
+
+			responseVariablesMapStructureGrpc.ResponseVariablesMap = responseVariablesMap
+
 			// Create TestInstructionInstance to be converted into a gRPC-version
 			var testInstructionInstanceVersionMessageGrpc *fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionInstanceVersionMessage
 			testInstructionInstanceVersionMessageGrpc = &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionInstanceVersionMessage{
@@ -161,6 +189,7 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 				TestInstructionInstanceMinorVersion: int32(testInstructionInstanceVersionMessage.TestInstructionInstanceMinorVersion),
 				Deprecated:                          testInstructionInstanceVersionMessage.Deprecated,
 				Enabled:                             testInstructionInstanceVersionMessage.Enabled,
+				ResponseVariablesMapStructure:       responseVariablesMapStructureGrpc,
 				TestInstructionInstanceVersionHash:  testInstructionInstanceVersionMessage.TestInstructionInstanceVersionHash,
 			}
 
@@ -284,8 +313,8 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 						Enabled:                               testInstructionContainerInstanceVersionMessage.TestInstructionContainerInstance.BasicTestInstructionContainerInformation.Enabled,
 						TestInstructionContainerExecutionType: string(testInstructionContainerInstanceVersionMessage.TestInstructionContainerInstance.BasicTestInstructionContainerInformation.TestInstructionContainerExecutionType),
 					},
-					ImmatureTestInstructionContainerInformations: immatureTestInstructionContainerInformationMessagesGrpc,
-					ImmatureElementModel:                         immatureElementModelMessagesGrpc,
+					ImmatureTestInstructionContainerInformation: immatureTestInstructionContainerInformationMessagesGrpc,
+					ImmatureElementModel:                        immatureElementModelMessagesGrpc,
 				},
 				TestInstructionContainerInstanceMajorVersion: int32(testInstructionContainerInstanceVersionMessage.TestInstructionContainerInstanceMajorVersion),
 				TestInstructionContainerInstanceMinorVersion: int32(testInstructionContainerInstanceVersionMessage.TestInstructionContainerInstanceMinorVersion),
@@ -352,6 +381,8 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 		ConnectorsDomainHash: testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainHash,
 	}
 
+	// Convert ResponseVariables into gRPC-message-version
+
 	// Create the full gRPC message for all supported TestInstructions, TestInstructionContainers and Allowed Users
 	supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage = &fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage{
 		ClientSystemIdentification: &fenixTestCaseBuilderServerGrpcApi.ClientSystemIdentificationMessage{
@@ -371,6 +402,7 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 			AllUsersAuthorizationRights: allUsersAuthorizationRightsGrpc,
 			AllowedUsersHash:            testInstructionsAndTestInstructionContainersMessage.AllowedUsers.AllowedUsersHash,
 		},
+
 		MessageCreationTimeStamp:                                        timestamppb.New(testInstructionsAndTestInstructionContainersMessage.MessageCreationTimeStamp),
 		TestInstructionsAndTestInstructionsContainersMessageHash:        testInstructionsAndTestInstructionContainersMessage.TestInstructionsAndTestInstructionsContainersAndUsersMessageHash,
 		ForceNewBaseLineForTestInstructionsAndTestInstructionContainers: testInstructionsAndTestInstructionContainersMessage.ForceNewBaseLineForTestInstructionsAndTestInstructionContainers,

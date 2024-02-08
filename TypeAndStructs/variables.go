@@ -227,3 +227,15 @@ type ImmatureBondStruct struct {
 	TestCaseModelElementType              TestCaseModelElementTypeType          `json:"TestCaseModelElementType"`
 	TestCaseModelElementTypeGrpcMappingID TestCaseModelElementGrpcMappingIdType `json:"TestCaseModelElementTypeGrpcMappingId"`
 }
+
+// Types used to specify response variables sent back from a TestInstructionExecution
+
+type ResponseVariableUuidType string
+type ResponseVariableNameType string
+type ResponseVariableIsMandatoryType bool
+
+type ResponseVariableStruct struct {
+	ResponseVariableUuid        ResponseVariableUuidType        `json:"ResponseVariableUuid"`
+	ResponseVariableName        ResponseVariableNameType        `json:"ResponseVariableName"`
+	ResponseVariableIsMandatory ResponseVariableIsMandatoryType `json:"ResponseVariableIsMandatory"`
+}
