@@ -7,7 +7,7 @@ require (
 	github.com/jlambert68/FenixGrpcApi v0.0.0-20240209132048-3d5bfd500587
 	github.com/jlambert68/FenixSyncShared v0.0.0-20231023123349-e891692cede8
 	golang.org/x/oauth2 v0.17.0
-	google.golang.org/api v0.162.0
+	google.golang.org/api v0.163.0
 	google.golang.org/genproto v0.0.0-20240205150955-31a09d347014
 	google.golang.org/grpc v1.61.0
 	google.golang.org/protobuf v1.32.0

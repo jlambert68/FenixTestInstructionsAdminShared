@@ -70,13 +70,14 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 			if tempTestInstructionInstanceVersionHash != hashedValue {
 				var newHashError error
 				newHashError = fmt.Errorf("Recalculated Hash is not the same as received Hash for TestInstruction "+
-					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got Hash=%s but recalculated Hash=%s. ",
+					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got Hash=%s but recalculated Hash=%s. [ErrorID=%s]",
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionUUID,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionName,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MajorVersionNumber,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MinorVersionNumber,
 					tempTestInstructionInstanceVersionHash,
-					hashedValue)
+					hashedValue,
+					"1abb307e-82b7-4a00-914b-96a83932d3a6")
 
 				// Append Error to slice with Errors
 				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
@@ -113,11 +114,12 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 				if tempResponseVariable.ResponseVariableHash != hashedValue {
 					var newHashError error
 					newHashError = fmt.Errorf("Recalculated Hash is not the same as received Hash for ResponseVariable "+
-						"with UUID=%s, with Name=%s. Got Hash=%s but recalculated Hash=%s. ",
+						"with UUID=%s, with Name=%s. Got Hash=%s but recalculated Hash=%s. [ErrorID=%s]",
 						tempResponseVariable.ResponseVariable.ResponseVariableUuid,
 						tempResponseVariable.ResponseVariable.ResponseVariableName,
 						tempResponseVariable.ResponseVariableHash,
-						hashedValue)
+						hashedValue,
+						"db52c9f9-18d5-4086-a855-2196fa9e8e5b")
 
 					// Append Error to slice with Errors
 					wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
@@ -143,10 +145,11 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 				ResponseVariablesMapHash != hashedValueForResponseVariables {
 				var newHashError error
 				newHashError = fmt.Errorf("Recalculated Hash is not the same as received Hash for all ResponseVariables "+
-					"Got Hash=%s but recalculated Hash=%s. ",
+					"Got Hash=%s but recalculated Hash=%s. [ErrorID=%s]",
 					tempTestInstructionVersion.ResponseVariablesMapStructure.
 						ResponseVariablesMapHash,
-					hashedValue)
+					hashedValue,
+					"e342d1ec-30c6-4f9d-aab9-344d8009c7d5")
 
 				// Append Error to slice with Errors
 				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
@@ -172,13 +175,14 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 			if tempTestInstructionVersion.TestInstructionInstanceVersionAndResponseVariablesHash != hashedValue {
 				var newHashError error
 				newHashError = fmt.Errorf("Recalculated full Hash is not the same as received Hash for TestInstructionInstanceVersion "+
-					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got Hash=%s but recalculated Hash=%s. ",
+					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got Hash=%s but recalculated Hash=%s. [ErrorID=%s]",
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionUUID,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionName,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MajorVersionNumber,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MinorVersionNumber,
 					tempTestInstructionVersion.TestInstructionInstanceVersionAndResponseVariablesHash,
-					hashedValue)
+					hashedValue,
+					"2a0858df-8b05-4cde-9e9f-21a452b1f5bd")
 
 				// Append Error to slice with Errors
 				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
@@ -195,13 +199,14 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 			if tempTestInstructionVersion.TestInstructionInstance.TestInstruction.DomainUUID != domainUUIDToVerify {
 				var newDomainError error
 				newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstruction(TestInstruction-Struct) "+
-					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. [ErrorID=%s]",
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionUUID,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionName,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MajorVersionNumber,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MinorVersionNumber,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.DomainUUID,
-					domainUUIDToVerify)
+					domainUUIDToVerify,
+					"f961187f-92c2-4389-87a5-8932d5baa95b")
 
 				// Append Error to slice with Errors
 				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
@@ -212,13 +217,14 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 			if tempTestInstructionVersion.TestInstructionInstance.BasicTestInstructionInformation.DomainUUID != domainUUIDToVerify {
 				var newDomainError error
 				newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstruction(BasicTestInstructionInformation-struct) "+
-					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. [ErrorID=%s]",
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionUUID,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionName,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MajorVersionNumber,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MinorVersionNumber,
 					tempTestInstructionVersion.TestInstructionInstance.BasicTestInstructionInformation.DomainUUID,
-					domainUUIDToVerify)
+					domainUUIDToVerify,
+					"df2e4dd5-2245-4838-9c81-75b2334dbc8b")
 
 				// Append Error to slice with Errors
 				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
@@ -231,14 +237,15 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 				if tempImmatureTestInstructionInformation.DomainUUID != domainUUIDToVerify {
 					var newDomainError error
 					newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstruction(ImmatureTestInstructionInformation, ArrayPosition=%d) "+
-						"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+						"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. [ErrorID=%s]",
 						slicePosition,
 						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionUUID,
 						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionName,
 						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MajorVersionNumber,
 						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MinorVersionNumber,
 						tempImmatureTestInstructionInformation.DomainUUID,
-						domainUUIDToVerify)
+						domainUUIDToVerify,
+						"90eb2907-cd79-41b8-b2c3-d495a99c44ac")
 
 					// Append Error to slice with Errors
 					wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
@@ -252,14 +259,15 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 				if tempImmatureElementModel.DomainUUID != domainUUIDToVerify {
 					var newDomainError error
 					newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstruction(ImmatureElementModel, ArrayPosition=%d) "+
-						"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+						"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. [ErrorID=%s]",
 						slicePosition,
 						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionUUID,
 						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionName,
 						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MajorVersionNumber,
 						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MinorVersionNumber,
 						tempImmatureElementModel.DomainUUID,
-						domainUUIDToVerify)
+						domainUUIDToVerify,
+						"64b845d0-db13-40b8-b6d4-873aa3343b2d")
 
 					// Append Error to slice with Errors
 					wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
@@ -273,14 +281,15 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 				if tempTestInstructionAttribute.DomainUUID != domainUUIDToVerify {
 					var newDomainError error
 					newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstruction(TestInstructionAttribute, ArrayPosition=%d) "+
-						"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+						"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. [ErrorID=%s]",
 						slicePosition,
 						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionUUID,
 						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionName,
 						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MajorVersionNumber,
 						tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MinorVersionNumber,
 						tempTestInstructionAttribute.DomainUUID,
-						domainUUIDToVerify)
+						domainUUIDToVerify,
+						"0d074a43-f0ec-418b-94d5-978e7b881ebd")
 
 					// Append Error to slice with Errors
 					wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
@@ -294,11 +303,12 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 		if tempTestInstruction.TestInstructionVersionsHash != hashedValue {
 			var newHashError error
 			newHashError = fmt.Errorf("Recalculated Hash is not the same as received Hash for TestInstructionInstance, "+
-				"with all its versions having UUID=%s, with Name=%s. Got Hash=%s but recalculated Hash=%s. ",
+				"with all its versions having UUID=%s, with Name=%s. Got Hash=%s but recalculated Hash=%s. [ErrorID=%s]",
 				tempTestInstruction.TestInstructionVersions[0].TestInstructionInstance.TestInstruction.TestInstructionUUID,
 				tempTestInstruction.TestInstructionVersions[0].TestInstructionInstance.TestInstruction.TestInstructionName,
 				tempTestInstruction.TestInstructionVersionsHash,
-				hashedValue)
+				hashedValue,
+				"9bf6effd-4f3e-4f1a-8ca7-f228dc8ca751")
 
 			// Append Error to slice with Errors
 			wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
@@ -319,9 +329,10 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 	if testInstructionsAndTestInstructionContainersMessageToCheck.TestInstructions.TestInstructionsHash != hashedValue {
 		var newHashError error
 		newHashError = fmt.Errorf("Recalculated Hash is not the same as received Hash for all TestInstructions, "+
-			"Got Hash=%s but recalculated Hash=%s. ",
+			"Got Hash=%s but recalculated Hash=%s. [ErrorID=%s]",
 			testInstructionsAndTestInstructionContainersMessageToCheck.TestInstructions.TestInstructionsHash,
-			hashedValue)
+			hashedValue,
+			"1aa93d5b-a531-4df4-a001-c88c36451c38")
 
 		// Append Error to slice with Errors
 		wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
@@ -367,13 +378,14 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 			if tempTestInstructionContainerVersion.TestInstructionContainerInstanceHash != hashedValue {
 				var newHashError error
 				newHashError = fmt.Errorf("Recalculated Hash is not the same as received Hash for TestInstructionContainer "+
-					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got Hash=%s but recalculated Hash=%s. ",
+					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got Hash=%s but recalculated Hash=%s. [ErrorID=%s]",
 					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerUUID,
 					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerName,
 					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MajorVersionNumber,
 					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MinorVersionNumber,
 					tempTestInstructionContainerVersion.TestInstructionContainerInstanceHash,
-					hashedValue)
+					hashedValue,
+					"8cdab5d4-ebcf-4ffc-b54e-1f349789f2cd")
 
 				// Append Error to slice with Errors
 				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
@@ -390,13 +402,14 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 			if tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.DomainUUID != domainUUIDToVerify {
 				var newDomainError error
 				newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstructionContainer(TestInstructionContainer-Struct) "+
-					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. [ErrorID=%s]",
 					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerUUID,
 					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerName,
 					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MajorVersionNumber,
 					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MinorVersionNumber,
 					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.DomainUUID,
-					domainUUIDToVerify)
+					domainUUIDToVerify,
+					"2d372f66-f5c4-4af2-a1ac-b1a52b996728")
 
 				// Append Error to slice with Errors
 				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
@@ -407,13 +420,14 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 			if tempTestInstructionContainerVersion.TestInstructionContainerInstance.BasicTestInstructionContainerInformation.DomainUUID != domainUUIDToVerify {
 				var newDomainError error
 				newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstructionContainer(BasicTestInstructionContainerInformation-struct) "+
-					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. [ErrorID=%s]",
 					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerUUID,
 					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerName,
 					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MajorVersionNumber,
 					tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MinorVersionNumber,
 					tempTestInstructionContainerVersion.TestInstructionContainerInstance.BasicTestInstructionContainerInformation.DomainUUID,
-					domainUUIDToVerify)
+					domainUUIDToVerify,
+					"1776ce6c-6df6-4474-baf9-2407d3c4bda0")
 
 				// Append Error to slice with Errors
 				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
@@ -426,14 +440,15 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 				if tempImmatureTestInstructionContainer.DomainUUID != domainUUIDToVerify {
 					var newDomainError error
 					newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstructionContainer(ImmatureTestInstructionInformation, ArrayPosition=%d) "+
-						"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+						"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. [ErrorID=%s]",
 						slicePosition,
 						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerUUID,
 						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerName,
 						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MajorVersionNumber,
 						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MinorVersionNumber,
 						tempImmatureTestInstructionContainer.DomainUUID,
-						domainUUIDToVerify)
+						domainUUIDToVerify,
+						"7c48cb3a-a865-4e6c-89e7-7c2dc484c221")
 
 					// Append Error to slice with Errors
 					wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
@@ -447,14 +462,15 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 				if tempImmatureElementModel.DomainUUID != domainUUIDToVerify {
 					var newDomainError error
 					newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for TestInstructionContainer(ImmatureElementModel, ArrayPosition=%d) "+
-						"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. ",
+						"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got DomainUUID=%s but supported DomainUUID=%s. [ErrorID=%s]",
 						slicePosition,
 						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerUUID,
 						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerName,
 						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MajorVersionNumber,
 						tempTestInstructionContainerVersion.TestInstructionContainerInstance.TestInstructionContainer.MinorVersionNumber,
 						tempImmatureElementModel.DomainUUID,
-						domainUUIDToVerify)
+						domainUUIDToVerify,
+						"0adf94ec-c77e-4a43-9f17-d6a6b996cae9")
 
 					// Append Error to slice with Errors
 					wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
@@ -469,11 +485,12 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 		if tempTestInstructionContainer.TestInstructionContainerVersionsHash != hashedValue {
 			var newHashError error
 			newHashError = fmt.Errorf("Recalculated Hash is not the same as received Hash for TestInstructionContainerInstance, "+
-				"with all its versions having UUID=%s, with Name=%s. Got Hash=%s but recalculated Hash=%s. ",
+				"with all its versions having UUID=%s, with Name=%s. Got Hash=%s but recalculated Hash=%s. [ErrorID=%s]",
 				tempTestInstructionContainer.TestInstructionContainerVersions[0].TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerUUID,
 				tempTestInstructionContainer.TestInstructionContainerVersions[0].TestInstructionContainerInstance.TestInstructionContainer.TestInstructionContainerName,
 				tempTestInstructionContainer.TestInstructionContainerVersionsHash,
-				hashedValue)
+				hashedValue,
+				"aca8992b-131f-4cc3-8f9c-90ee4a40b2b4")
 
 			// Append Error to slice with Errors
 			wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
@@ -494,9 +511,10 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 	if testInstructionsAndTestInstructionContainersMessageToCheck.TestInstructionContainers.TestInstructionContainersHash != hashedValue {
 		var newHashError error
 		newHashError = fmt.Errorf("Recalculated Hash is not the same as received Hash for all TestInstructionContainers, "+
-			"Got Hash=%s but recalculated Hash=%s. ",
+			"Got Hash=%s but recalculated Hash=%s. [ErrorID=%s]",
 			testInstructionsAndTestInstructionContainersMessageToCheck.TestInstructionContainers.TestInstructionContainersHash,
-			hashedValue)
+			hashedValue,
+			"4722ed85-927c-459a-91dd-7690ca888de5")
 
 		// Append Error to slice with Errors
 		wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
@@ -560,9 +578,10 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 	if testInstructionsAndTestInstructionContainersMessageToCheck.AllowedUsers.AllowedUsersHash != hashedValue {
 		var newHashError error
 		newHashError = fmt.Errorf("Recalculated Hash is not the same as received Hash for all AllowedUsers, "+
-			"Got Hash=%s but recalculated Hash=%s. ",
+			"Got Hash=%s but recalculated Hash=%s. [ErrorID=%s]",
 			testInstructionsAndTestInstructionContainersMessageToCheck.AllowedUsers.AllowedUsersHash,
-			hashedValue)
+			hashedValue,
+			"c420b6f6-31fe-49af-b80a-45c24dc8d61d")
 
 		// Append Error to slice with Errors
 		wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
@@ -612,9 +631,10 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 	if testInstructionsAndTestInstructionContainersMessageToCheck.TestInstructionsAndTestInstructionsContainersAndUsersMessageHash != hashedValue {
 		var newHashError error
 		newHashError = fmt.Errorf("Recalculated Hash is not the same as received Hash for the full message, "+
-			"Got Hash=%s but recalculated Hash=%s. ",
+			"Got Hash=%s but recalculated Hash=%s. [ErrorID=%s]",
 			testInstructionsAndTestInstructionContainersMessageToCheck.TestInstructionsAndTestInstructionsContainersAndUsersMessageHash,
-			hashedValue)
+			hashedValue,
+			"abd112ec-eaa8-4e5c-afa1-61aeba2a5b6c")
 
 		// Append Error to slice with Errors
 		wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
@@ -627,9 +647,10 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 	if testInstructionsAndTestInstructionContainersMessageToCheck.ConnectorsDomain.ConnectorsDomainUUID != domainUUIDToVerify {
 		var newDomainError error
 		newDomainError = fmt.Errorf("Supported DomainUUID is is not the same as received DomainUUID for ConnectorDomain. "+
-			"Got DomainUUID=%s but supported DomainUUID=%s. ",
+			"Got DomainUUID=%s but supported DomainUUID=%s. [ErrorID=%s]",
 			testInstructionsAndTestInstructionContainersMessageToCheck.ConnectorsDomain.ConnectorsDomainUUID,
-			domainUUIDToVerify)
+			domainUUIDToVerify,
+			"8a4788ab-1f57-477b-92f6-6abd9f71a12e")
 
 		// Append Error to slice with Errors
 		wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newDomainError)
