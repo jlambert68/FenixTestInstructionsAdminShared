@@ -102,7 +102,7 @@ func CalculateTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 			tempTotalTestInstructionInstanceVersionHash = append(tempTotalTestInstructionInstanceVersionHash, testInstructionVersionsHash)
 
 			// Append the hash for the Response variables
-			tempTotalTestInstructionInstanceVersionHash = append(tempTotalTestInstructionInstanceVersionHash, hashedValue)
+			tempTotalTestInstructionInstanceVersionHash = append(tempTotalTestInstructionInstanceVersionHash, hashedValueForResponseVariables)
 
 			// Create the hash to be store for the complete TestInstructionInstance
 			hashedValue = fenixSyncShared.HashValues(tempTotalTestInstructionInstanceVersionHash, false)

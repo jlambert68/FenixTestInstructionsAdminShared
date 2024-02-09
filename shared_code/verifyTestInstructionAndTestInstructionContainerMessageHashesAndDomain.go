@@ -104,11 +104,12 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 			}
 
 			// Hash all values in slice with hashes for Response variables
-			hashedValue = fenixSyncShared.HashValues(responseVariablesHashesSlice, false)
+			var hashedValueForResponseVariables string
+			hashedValueForResponseVariables = fenixSyncShared.HashValues(responseVariablesHashesSlice, false)
 
 			// Verify if recalculated hash is the same that was received via gRPC-message for final Response variables
 			if tempTestInstructionVersion.ResponseVariablesMapStructure.
-				ResponseVariablesMapHash != hashedValue {
+				ResponseVariablesMapHash != hashedValueForResponseVariables {
 				var newHashError error
 				newHashError = fmt.Errorf("Recalculated Hash is not the same as received Hash for all ResponseVariables "+
 					"Got Hash=%s but recalculated Hash=%s. ",
@@ -122,7 +123,7 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 
 			// Store the final Response variables Hash in the structure
 			tempTestInstructionVersion.ResponseVariablesMapStructure.
-				ResponseVariablesMapHash = hashedValue
+				ResponseVariablesMapHash = hashedValueForResponseVariables
 
 			// Calculate to total hash for TestInstructionInstance
 			var tempTotalTestInstructionInstanceVersionHash []string
@@ -131,7 +132,7 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 			tempTotalTestInstructionInstanceVersionHash = append(tempTotalTestInstructionInstanceVersionHash, testInstructionVersionsHash)
 
 			// Append the hash for the Response variables
-			tempTotalTestInstructionInstanceVersionHash = append(tempTotalTestInstructionInstanceVersionHash, hashedValue)
+			tempTotalTestInstructionInstanceVersionHash = append(tempTotalTestInstructionInstanceVersionHash, hashedValueForResponseVariables)
 
 			// Create the hash to be store for the complete TestInstructionInstance
 			hashedValue = fenixSyncShared.HashValues(tempTotalTestInstructionInstanceVersionHash, false)
