@@ -192,8 +192,9 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 				TestInstructionInstanceMinorVersion: int32(testInstructionInstanceVersionMessage.TestInstructionInstanceMinorVersion),
 				Deprecated:                          testInstructionInstanceVersionMessage.Deprecated,
 				Enabled:                             testInstructionInstanceVersionMessage.Enabled,
-				ResponseVariablesMapStructure:       responseVariablesMapStructureGrpc,
 				TestInstructionInstanceVersionHash:  testInstructionInstanceVersionMessage.TestInstructionInstanceVersionHash,
+				ResponseVariablesMapStructure:       responseVariablesMapStructureGrpc,
+				TestInstructionInstanceVersionAndResponseVariablesHash: testInstructionInstanceVersionMessage.TestInstructionInstanceVersionAndResponseVariablesHash,
 			}
 
 			testInstructionInstanceVersionMessagesGrpc = append(testInstructionInstanceVersionMessagesGrpc, testInstructionInstanceVersionMessageGrpc)

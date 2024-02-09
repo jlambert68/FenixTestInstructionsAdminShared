@@ -32,17 +32,26 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 
 		// For each TestInstruction loop TestInstructionVersions
 		var testInstructionVersionsHashesSlice []string
-		var testInstructionVersionsHash string
 		for _, tempTestInstructionVersion := range tempTestInstruction.TestInstructionVersions {
 
 			// Temporary set 'Hash' to a standard value to be able to recreate Hash-value
-			var tempHashValue string
+			var tempTestInstructionInstanceVersionHash string
+			var tempTestInstructionInstanceVersionAndResponseVariablesHash string
 
 			// Save Hash-value before hashing
-			tempHashValue = tempTestInstructionVersion.TestInstructionInstanceVersionHash
+			tempTestInstructionInstanceVersionHash = tempTestInstructionVersion.TestInstructionInstanceVersionHash
+			tempTestInstructionInstanceVersionAndResponseVariablesHash = tempTestInstructionVersion.TestInstructionInstanceVersionAndResponseVariablesHash
 
 			// Set 'Hash' to a standard value
 			tempTestInstructionVersion.TestInstructionInstanceVersionHash = InitialValueBeforeHashed
+			tempTestInstructionVersion.TestInstructionInstanceVersionAndResponseVariablesHash = InitialValueBeforeHashed
+
+			// Save local copy of 'ResponseVariablesMapStructure'
+			var tempLocalResponseVariablesMapStructure *TestInstructionAndTestInstuctionContainerTypes.ResponseVariablesMapStructureStruct
+			tempLocalResponseVariablesMapStructure = tempTestInstructionVersion.ResponseVariablesMapStructure
+
+			// Clear 'ResponseVariablesMapStructure' before hashing
+			tempTestInstructionVersion.ResponseVariablesMapStructure = nil
 
 			// Convert TestInstructionVersion to byte-string and then Hash message
 			byteSlice, err = json.Marshal(&tempTestInstructionVersion)
@@ -51,14 +60,36 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 				return []error{err}
 			}
 
-			// Repopulate Hash-value after Hashing
-			tempTestInstructionVersion.TestInstructionInstanceVersionHash = tempHashValue
-
 			// Convert byteSlice into string
 			byteSliceAsString = string(byteSlice)
 
 			// Hash the json-string
-			testInstructionVersionsHash = fenixSyncShared.HashSingleValue(byteSliceAsString)
+			hashedValue = fenixSyncShared.HashSingleValue(byteSliceAsString)
+
+			// Verify if recalculated hash is the same that was received via gRPC-message for specific TestInstructionInstanceVersion
+			if tempTestInstructionInstanceVersionHash != hashedValue {
+				var newHashError error
+				newHashError = fmt.Errorf("Recalculated Hash is not the same as received Hash for TestInstruction "+
+					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got Hash=%s but recalculated Hash=%s. ",
+					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionUUID,
+					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionName,
+					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MajorVersionNumber,
+					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MinorVersionNumber,
+					tempTestInstructionInstanceVersionHash,
+					hashedValue)
+
+				// Append Error to slice with Errors
+				wrongHashesOrDomainUUIDSlice = append(wrongHashesOrDomainUUIDSlice, newHashError)
+			}
+
+			// Set the new Hash
+			tempTestInstructionVersion.TestInstructionInstanceVersionHash = hashedValue
+
+			// Repopulate Hash-value after Hashing
+			tempTestInstructionVersion.TestInstructionInstanceVersionAndResponseVariablesHash = tempTestInstructionInstanceVersionAndResponseVariablesHash
+
+			// Repopulate ResponseVariablesMapStructure-object after Hashing
+			tempTestInstructionVersion.ResponseVariablesMapStructure = tempLocalResponseVariablesMapStructure
 
 			// Create Hashes for Response variables
 			var responseVariablesHashesSlice []string
@@ -129,7 +160,7 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 			var tempTotalTestInstructionInstanceVersionHash []string
 
 			// Append the hash for the TestInstructionInstance itself
-			tempTotalTestInstructionInstanceVersionHash = append(tempTotalTestInstructionInstanceVersionHash, testInstructionVersionsHash)
+			tempTotalTestInstructionInstanceVersionHash = append(tempTotalTestInstructionInstanceVersionHash, tempTestInstructionVersion.TestInstructionInstanceVersionHash)
 
 			// Append the hash for the Response variables
 			tempTotalTestInstructionInstanceVersionHash = append(tempTotalTestInstructionInstanceVersionHash, hashedValueForResponseVariables)
@@ -137,16 +168,16 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 			// Create the hash to be store for the complete TestInstructionInstance
 			hashedValue = fenixSyncShared.HashValues(tempTotalTestInstructionInstanceVersionHash, false)
 
-			// Verify if recalculated hash is the same that was received via gRPC-message for specific TestInstructionInstanceVersion
-			if tempTestInstructionVersion.TestInstructionInstanceVersionHash != hashedValue {
+			// Verify if recalculated hash for full TestInstructionInstanceVersion is the same that was received via gRPC-message for specific TestInstructionInstanceVersion
+			if tempTestInstructionVersion.TestInstructionInstanceVersionAndResponseVariablesHash != hashedValue {
 				var newHashError error
-				newHashError = fmt.Errorf("Recalculated Hash is not the same as received Hash for TestInstruction "+
+				newHashError = fmt.Errorf("Recalculated full Hash is not the same as received Hash for TestInstructionInstanceVersion "+
 					"with UUID=%s, with Name=%s, having MajorVersion=%d and MinorVersion=%d. Got Hash=%s but recalculated Hash=%s. ",
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionUUID,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.TestInstructionName,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MajorVersionNumber,
 					tempTestInstructionVersion.TestInstructionInstance.TestInstruction.MinorVersionNumber,
-					tempTestInstructionVersion.TestInstructionInstanceVersionHash,
+					tempTestInstructionVersion.TestInstructionInstanceVersionAndResponseVariablesHash,
 					hashedValue)
 
 				// Append Error to slice with Errors
@@ -154,7 +185,7 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 			}
 
 			// Set the new Hash
-			tempTestInstructionVersion.TestInstructionInstanceVersionHash = hashedValue
+			tempTestInstructionVersion.TestInstructionInstanceVersionAndResponseVariablesHash = hashedValue
 
 			// Add the hash to slice of Hashes for TestInstInstructionVersions
 			testInstructionVersionsHashesSlice = append(testInstructionVersionsHashesSlice, hashedValue)

@@ -191,8 +191,9 @@ func GenerateStandardFromGrpcWorkerMessageForTestInstructionsAndUsers(
 				TestInstructionInstanceMinorVersion: int(testInstructionInstanceVersionMessageGrpc.GetTestInstructionInstanceMinorVersion()),
 				Deprecated:                          testInstructionInstanceVersionMessageGrpc.GetDeprecated(),
 				Enabled:                             testInstructionInstanceVersionMessageGrpc.GetEnabled(),
-				ResponseVariablesMapStructure:       responseVariablesMapStructureMessage,
 				TestInstructionInstanceVersionHash:  testInstructionInstanceVersionMessageGrpc.GetTestInstructionInstanceVersionHash(),
+				ResponseVariablesMapStructure:       responseVariablesMapStructureMessage,
+				TestInstructionInstanceVersionAndResponseVariablesHash: testInstructionInstanceVersionMessageGrpc.GetTestInstructionInstanceVersionAndResponseVariablesHash(),
 			}
 
 			testInstructionInstanceVersionMessages = append(testInstructionInstanceVersionMessages, testInstructionInstanceVersionMessage)

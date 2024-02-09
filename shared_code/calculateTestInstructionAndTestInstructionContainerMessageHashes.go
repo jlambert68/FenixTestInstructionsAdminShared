@@ -42,6 +42,13 @@ func CalculateTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 			// Clear LocalExecution before hashing
 			tempTestInstructionVersion.TestInstructionInstance.LocalExecutionMethods.Value = nil
 
+			// Save local copy of 'ResponseVariablesMapStructure'
+			var tempLocalResponseVariablesMapStructure *TestInstructionAndTestInstuctionContainerTypes.ResponseVariablesMapStructureStruct
+			tempLocalResponseVariablesMapStructure = tempTestInstructionVersion.ResponseVariablesMapStructure
+
+			// Clear 'ResponseVariablesMapStructure' before hashing
+			tempTestInstructionVersion.ResponseVariablesMapStructure = nil
+
 			// Convert TestInstructionVersion to byte-string and then Hash message
 			byteSlice, err = json.Marshal(&tempTestInstructionVersion)
 			if err != nil {
@@ -53,11 +60,17 @@ func CalculateTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 			//tempTestInstructionVersion.TestInstructionInstance.LocalExecutionMethods = PullFromTempStoreFunction() //tempLocalExecutionMethods
 			tempTestInstructionVersion.TestInstructionInstance.LocalExecutionMethods = tempLocalExecutionMethods
 
+			// Repopulate ResponseVariablesMapStructure-object after Hashing
+			tempTestInstructionVersion.ResponseVariablesMapStructure = tempLocalResponseVariablesMapStructure
+
 			// Convert byteSlice into string
 			byteSliceAsString = string(byteSlice)
 
 			// Hash the json-string
 			testInstructionVersionsHash = fenixSyncShared.HashSingleValue(byteSliceAsString)
+
+			// Add hash to the specific TestInstructionInstanceVersion
+			tempTestInstructionVersion.TestInstructionInstanceVersionHash = testInstructionVersionsHash
 
 			// Create Hashes for Response variables
 			var responseVariablesHashesSlice []string
@@ -99,7 +112,7 @@ func CalculateTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 			var tempTotalTestInstructionInstanceVersionHash []string
 
 			// Append the hash for the TestInstructionInstance itself
-			tempTotalTestInstructionInstanceVersionHash = append(tempTotalTestInstructionInstanceVersionHash, testInstructionVersionsHash)
+			tempTotalTestInstructionInstanceVersionHash = append(tempTotalTestInstructionInstanceVersionHash, tempTestInstructionVersion.TestInstructionInstanceVersionHash)
 
 			// Append the hash for the Response variables
 			tempTotalTestInstructionInstanceVersionHash = append(tempTotalTestInstructionInstanceVersionHash, hashedValueForResponseVariables)
@@ -108,7 +121,7 @@ func CalculateTestInstructionAndTestInstructionContainerAndUsersMessageHashes(
 			hashedValue = fenixSyncShared.HashValues(tempTotalTestInstructionInstanceVersionHash, false)
 
 			// Add hash to the specific TestInstructionInstanceVersion
-			tempTestInstructionVersion.TestInstructionInstanceVersionHash = hashedValue
+			tempTestInstructionVersion.TestInstructionInstanceVersionAndResponseVariablesHash = hashedValue
 
 			// Add the hash to slice of Hashes for TestInstInstructionVersions
 			testInstructionVersionsHashesSlice = append(testInstructionVersionsHashesSlice, hashedValue)

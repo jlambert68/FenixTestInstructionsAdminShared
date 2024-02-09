@@ -39,13 +39,14 @@ type TestInstructionContainerStruct struct {
 // TestInstructionInstanceVersionStruct
 // Struct for one TestInstruction, to be sent over gRPC to Fenix backend
 type TestInstructionInstanceVersionStruct struct {
-	TestInstructionInstance             *TestInstructionStruct               `json:"TestInstructionInstance"`
-	TestInstructionInstanceMajorVersion int                                  `json:"TestInstructionInstanceMajorVersion"`
-	TestInstructionInstanceMinorVersion int                                  `json:"TestInstructionInstanceMinorVersion"`
-	Deprecated                          bool                                 `json:"Deprecated"`
-	Enabled                             bool                                 `json:"Enabled"`
-	ResponseVariablesMapStructure       *ResponseVariablesMapStructureStruct `json:"ResponseVariablesMapStructure"`
-	TestInstructionInstanceVersionHash  string                               `json:"TestInstructionInstanceVersionHash"`
+	TestInstructionInstance                                *TestInstructionStruct               `json:"TestInstructionInstance"`
+	TestInstructionInstanceMajorVersion                    int                                  `json:"TestInstructionInstanceMajorVersion"`
+	TestInstructionInstanceMinorVersion                    int                                  `json:"TestInstructionInstanceMinorVersion"`
+	Deprecated                                             bool                                 `json:"Deprecated"`
+	Enabled                                                bool                                 `json:"Enabled"`
+	TestInstructionInstanceVersionHash                     string                               `json:"TestInstructionInstanceVersionHash"`
+	ResponseVariablesMapStructure                          *ResponseVariablesMapStructureStruct `json:"ResponseVariablesMapStructure"`
+	TestInstructionInstanceVersionAndResponseVariablesHash string                               `json:"TestInstructionInstanceVersionAndResponseVariablesHash"`
 }
 
 // TestInstructionInstanceVersionsStruct
