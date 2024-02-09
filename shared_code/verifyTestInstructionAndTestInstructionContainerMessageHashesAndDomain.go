@@ -58,7 +58,7 @@ func VerifyTestInstructionAndTestInstructionContainerAndUsersMessageHashesAndDom
 			byteSliceAsString = string(byteSlice)
 
 			// Hash the json-string
-			hashedValue = fenixSyncShared.HashSingleValue(byteSliceAsString)
+			testInstructionVersionsHash = fenixSyncShared.HashSingleValue(byteSliceAsString)
 
 			// Create Hashes for Response variables
 			var responseVariablesHashesSlice []string
