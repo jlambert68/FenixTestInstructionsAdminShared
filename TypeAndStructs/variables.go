@@ -232,10 +232,12 @@ type ImmatureBondStruct struct {
 
 type ResponseVariableUuidType string
 type ResponseVariableNameType string
+type ResponseVariableDescriptionType string
 type ResponseVariableIsMandatoryType bool
 
 type ResponseVariableStruct struct {
 	ResponseVariableUuid        ResponseVariableUuidType        `json:"ResponseVariableUuid"`
 	ResponseVariableName        ResponseVariableNameType        `json:"ResponseVariableName"`
+	ResponseVariableDescription ResponseVariableDescriptionType `json:"ResponseVariableDescription"`
 	ResponseVariableIsMandatory ResponseVariableIsMandatoryType `json:"ResponseVariableIsMandatory"`
 }

@@ -132,6 +132,7 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 					ResponseVariable: &fenixTestCaseBuilderServerGrpcApi.ResponseVariableMessage{
 						ResponseVariableUuid:        string(responseVariable.ResponseVariable.ResponseVariableUuid),
 						ResponseVariableName:        string(responseVariable.ResponseVariable.ResponseVariableName),
+						ResponseVariableDescription: string(responseVariable.ResponseVariable.ResponseVariableDescription),
 						ResponseVariableIsMandatory: bool(responseVariable.ResponseVariable.ResponseVariableIsMandatory),
 					},
 					ResponseVariableHash: responseVariable.ResponseVariableHash,

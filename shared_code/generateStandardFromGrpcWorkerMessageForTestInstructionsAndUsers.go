@@ -130,6 +130,7 @@ func GenerateStandardFromGrpcWorkerMessageForTestInstructionsAndUsers(
 					ResponseVariable: TypeAndStructs.ResponseVariableStruct{
 						ResponseVariableUuid:        TypeAndStructs.ResponseVariableUuidType(responseVariable.GetResponseVariable().GetResponseVariableUuid()),
 						ResponseVariableName:        TypeAndStructs.ResponseVariableNameType(responseVariable.GetResponseVariable().GetResponseVariableName()),
+						ResponseVariableDescription: TypeAndStructs.ResponseVariableDescriptionType(responseVariable.GetResponseVariable().GetResponseVariableDescription()),
 						ResponseVariableIsMandatory: TypeAndStructs.ResponseVariableIsMandatoryType(responseVariable.GetResponseVariable().GetResponseVariableIsMandatory()),
 					},
 					ResponseVariableHash: responseVariable.ResponseVariableHash,
