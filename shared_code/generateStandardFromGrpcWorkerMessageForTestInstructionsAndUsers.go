@@ -27,7 +27,7 @@ func GenerateStandardFromGrpcWorkerMessageForTestInstructionsAndUsers(
 
 			// Loop and Create 'ImmatureTestInstructionsInformation' from 'testInstructionInstanceVersionMessageGrpc'
 			var immatureTestInstructionInformationMessages []*TypeAndStructs.ImmatureTestInstructionInformationStruct
-			for _, immatureTestInstructionInformationMessageGrpc := range testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.ImmatureTestInstructionInformations {
+			for _, immatureTestInstructionInformationMessageGrpc := range testInstructionInstanceVersionMessageGrpc.TestInstructionInstance.ImmatureTestInstructionInformation {
 
 				// Create the gRPC-version of the message
 				var immatureTestInstructionInformationMessage *TypeAndStructs.ImmatureTestInstructionInformationStruct
@@ -111,6 +111,35 @@ func GenerateStandardFromGrpcWorkerMessageForTestInstructionsAndUsers(
 				immatureElementModelMessages = append(immatureElementModelMessages, immatureElementModelMessage)
 			}
 
+			// Create ResponseVariablesMapStructure to be converted from a gRPC-version
+			var responseVariablesMapStructureMessage *TestInstructionAndTestInstuctionContainerTypes.ResponseVariablesMapStructureStruct
+			responseVariablesMapStructureMessage = &TestInstructionAndTestInstuctionContainerTypes.ResponseVariablesMapStructureStruct{
+				ResponseVariablesMap:     nil,
+				ResponseVariablesMapHash: testInstructionInstanceVersionMessageGrpc.ResponseVariablesMapStructure.GetResponseVariablesMapHash(),
+			}
+
+			// Create 'ResponseVariablesMap'  to be converted from a gRPC-version
+			var responseVariablesMap map[TypeAndStructs.ResponseVariableUuidType]*TestInstructionAndTestInstuctionContainerTypes.ResponseVariableStructureStruct
+			responseVariablesMap = make(map[TypeAndStructs.ResponseVariableUuidType]*TestInstructionAndTestInstuctionContainerTypes.ResponseVariableStructureStruct)
+
+			for responseVariableUuid, responseVariable := range testInstructionInstanceVersionMessageGrpc.
+				ResponseVariablesMapStructure.ResponseVariablesMap {
+
+				var tempResponseVariable *TestInstructionAndTestInstuctionContainerTypes.ResponseVariableStructureStruct
+				tempResponseVariable = &TestInstructionAndTestInstuctionContainerTypes.ResponseVariableStructureStruct{
+					ResponseVariable: TypeAndStructs.ResponseVariableStruct{
+						ResponseVariableUuid:        TypeAndStructs.ResponseVariableUuidType(responseVariable.GetResponseVariable().GetResponseVariableUuid()),
+						ResponseVariableName:        TypeAndStructs.ResponseVariableNameType(responseVariable.GetResponseVariable().GetResponseVariableName()),
+						ResponseVariableIsMandatory: TypeAndStructs.ResponseVariableIsMandatoryType(responseVariable.GetResponseVariable().GetResponseVariableIsMandatory()),
+					},
+					ResponseVariableHash: responseVariable.ResponseVariableHash,
+				}
+
+				responseVariablesMap[TypeAndStructs.ResponseVariableUuidType(responseVariableUuid)] = tempResponseVariable
+			}
+
+			responseVariablesMapStructureMessage.ResponseVariablesMap = responseVariablesMap
+
 			// Create TestInstructionInstance to be converted from a gRPC-version
 			var testInstructionInstanceVersionMessage *TestInstructionAndTestInstuctionContainerTypes.TestInstructionInstanceVersionStruct
 			testInstructionInstanceVersionMessage = &TestInstructionAndTestInstuctionContainerTypes.TestInstructionInstanceVersionStruct{
@@ -161,6 +190,7 @@ func GenerateStandardFromGrpcWorkerMessageForTestInstructionsAndUsers(
 				TestInstructionInstanceMinorVersion: int(testInstructionInstanceVersionMessageGrpc.GetTestInstructionInstanceMinorVersion()),
 				Deprecated:                          testInstructionInstanceVersionMessageGrpc.GetDeprecated(),
 				Enabled:                             testInstructionInstanceVersionMessageGrpc.GetEnabled(),
+				ResponseVariablesMapStructure:       responseVariablesMapStructureMessage,
 				TestInstructionInstanceVersionHash:  testInstructionInstanceVersionMessageGrpc.GetTestInstructionInstanceVersionHash(),
 			}
 

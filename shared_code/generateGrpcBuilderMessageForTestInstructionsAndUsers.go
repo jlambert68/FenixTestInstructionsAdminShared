@@ -122,6 +122,8 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 
 			// Create 'ResponseVariablesMap'
 			var responseVariablesMap map[string]*fenixTestCaseBuilderServerGrpcApi.ResponseVariableStructureMessage
+			responseVariablesMap = make(map[string]*fenixTestCaseBuilderServerGrpcApi.ResponseVariableStructureMessage)
+
 			for responseVariableUuid, responseVariable := range testInstructionInstanceVersionMessage.
 				ResponseVariablesMapStructure.ResponseVariablesMap {
 
