@@ -134,6 +134,8 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 						ResponseVariableName:        string(responseVariable.ResponseVariable.ResponseVariableName),
 						ResponseVariableDescription: string(responseVariable.ResponseVariable.ResponseVariableDescription),
 						ResponseVariableIsMandatory: bool(responseVariable.ResponseVariable.ResponseVariableIsMandatory),
+						ResponseVariableTypeUuid:    string(responseVariable.ResponseVariable.ResponseVariableTypeUuid),
+						ResponseVariableTypeName:    string(responseVariable.ResponseVariable.ResponseVariableTypeName),
 					},
 					ResponseVariableHash: responseVariable.ResponseVariableHash,
 				}
