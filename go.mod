@@ -5,7 +5,7 @@ go 1.21
 require (
 	cloud.google.com/go/iam v1.1.6
 	github.com/jlambert68/FenixGrpcApi v0.0.0-20240214145621-7060f4a311a9
-	github.com/jlambert68/FenixSyncShared v0.0.0-20240215094800-e31135bca7c0
+	github.com/jlambert68/FenixSyncShared v0.0.0-20240215115014-3251590d407c
 	golang.org/x/oauth2 v0.17.0
 	google.golang.org/api v0.165.0
 	google.golang.org/genproto v0.0.0-20240213162025-012b6fc9bca9
