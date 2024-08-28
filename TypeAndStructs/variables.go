@@ -14,6 +14,7 @@ type TCRuleSwapType string
 type DropZoneUUIDType string
 type DropZoneNameType string
 type TestInstructionAttributeTypeType string
+type TestInstructionAttributeComboBoxPredefinedValuesType []string
 type TestInstructionAttributeUUIDType string
 type TestInstructionAttributeNameType string
 type AttributeValueAsStringType string
@@ -113,25 +114,26 @@ type ImmatureTestInstructionInformationStruct struct {
 
 type TestInstructionAttributes []TestInstructionAttributeStruct
 type TestInstructionAttributeStruct struct {
-	DomainUUID                                    DomainUUIDType                        `json:"DomainUuid"`
-	DomainName                                    DomainNameType                        `json:"DomainName"`
-	TestInstructionUUID                           OriginalElementUUIDType               `json:"TestInstructionUuid"`
-	TestInstructionName                           TestInstructionNameType               `json:"TestInstructionName"`
-	TestInstructionAttributeUUID                  TestInstructionAttributeUUIDType      `json:"TestInstructionAttributeUuid"`
-	TestInstructionAttributeName                  TestInstructionAttributeNameType      `json:"TestInstructionAttributeName"`
-	TestInstructionAttributeDescription           string                                `json:"TestInstructionAttributeDescription"`
-	TestInstructionAttributeMouseOver             string                                `json:"TestInstructionAttributeMouseOver"`
-	TestInstructionAttributeTypeUUID              TestInstructionAttributeTypeUUIDType  `json:"TestInstructionAttributeTypeUuid"`
-	TestInstructionAttributeTypeName              TestInstructionAttributeTypeNameType  `json:"TestInstructionAttributeTypeName"`
-	TestInstructionAttributeValueAsString         AttributeValueAsStringType            `json:"TestInstructionAttributeValueAsString"`
-	TestInstructionAttributeValueUUID             AttributeValueUUIDType                `json:"TestInstructionAttributeValueUuid"`
-	TestInstructionAttributeVisible               bool                                  `json:"TestInstructionAttributeVisible"`
-	TestInstructionAttributeEnabled               bool                                  `json:"TestInstructionAttributeEnabled"`
-	TestInstructionAttributeMandatory             bool                                  `json:"TestInstructionAttributeMandatory"`
-	TestInstructionAttributeVisibleInTestCaseArea bool                                  `json:"TestInstructionAttributeVisibleInTestCaseArea"`
-	TestInstructionAttributeIsDeprecated          bool                                  `json:"TestInstructionAttributeIsDeprecated"`
-	TestInstructionAttributeInputMask             TestInstructionAttributeInputMaskType `json:"TestInstructionAttributeInputMask"`
-	TestInstructionAttributeType                  TestInstructionAttributeTypeType      `json:"TestInstructionAttributeType"` // TEXTBOX...
+	DomainUUID                                       DomainUUIDType                                       `json:"DomainUuid"`
+	DomainName                                       DomainNameType                                       `json:"DomainName"`
+	TestInstructionUUID                              OriginalElementUUIDType                              `json:"TestInstructionUuid"`
+	TestInstructionName                              TestInstructionNameType                              `json:"TestInstructionName"`
+	TestInstructionAttributeUUID                     TestInstructionAttributeUUIDType                     `json:"TestInstructionAttributeUuid"`
+	TestInstructionAttributeName                     TestInstructionAttributeNameType                     `json:"TestInstructionAttributeName"`
+	TestInstructionAttributeDescription              string                                               `json:"TestInstructionAttributeDescription"`
+	TestInstructionAttributeMouseOver                string                                               `json:"TestInstructionAttributeMouseOver"`
+	TestInstructionAttributeTypeUUID                 TestInstructionAttributeTypeUUIDType                 `json:"TestInstructionAttributeTypeUuid"`
+	TestInstructionAttributeTypeName                 TestInstructionAttributeTypeNameType                 `json:"TestInstructionAttributeTypeName"`
+	TestInstructionAttributeValueAsString            AttributeValueAsStringType                           `json:"TestInstructionAttributeValueAsString"`
+	TestInstructionAttributeValueUUID                AttributeValueUUIDType                               `json:"TestInstructionAttributeValueUuid"`
+	TestInstructionAttributeVisible                  bool                                                 `json:"TestInstructionAttributeVisible"`
+	TestInstructionAttributeEnabled                  bool                                                 `json:"TestInstructionAttributeEnabled"`
+	TestInstructionAttributeMandatory                bool                                                 `json:"TestInstructionAttributeMandatory"`
+	TestInstructionAttributeVisibleInTestCaseArea    bool                                                 `json:"TestInstructionAttributeVisibleInTestCaseArea"`
+	TestInstructionAttributeIsDeprecated             bool                                                 `json:"TestInstructionAttributeIsDeprecated"`
+	TestInstructionAttributeInputMask                TestInstructionAttributeInputMaskType                `json:"TestInstructionAttributeInputMask"`
+	TestInstructionAttributeType                     TestInstructionAttributeTypeType                     `json:"TestInstructionAttributeType"` // TEXTBOX...
+	TestInstructionAttributeComboBoxPredefinedValues TestInstructionAttributeComboBoxPredefinedValuesType `json:"TestInstructionAttributeComboBoxPredefinedValues"`
 }
 
 type TestInstructionContainers []TestInstructionContainerStruct
