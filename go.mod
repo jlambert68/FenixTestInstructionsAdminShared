@@ -6,7 +6,7 @@ toolchain go1.23.0
 
 require (
 	cloud.google.com/go/iam v1.2.0
-	github.com/jlambert68/FenixGrpcApi v0.0.0-20240828105603-3ccecfdadf07
+	github.com/jlambert68/FenixGrpcApi v0.0.0-20240830054946-33e5771fee81
 	github.com/jlambert68/FenixSyncShared v0.0.0-20240215140904-db0840b5d70a
 	golang.org/x/oauth2 v0.22.0
 	google.golang.org/api v0.194.0
@@ -35,7 +35,7 @@ require (
 	github.com/jackc/pgproto3/v2 v2.3.3 // indirect
 	github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 // indirect
 	github.com/jackc/pgtype v1.14.3 // indirect
-	github.com/jackc/pgx/v4 v4.18.3 // indirect
+	github.com/jackc/pgx/v4 v4.18.2 // indirect
 	github.com/jackc/puddle v1.3.0 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	go.opencensus.io v0.24.0 // indirect
