@@ -2,6 +2,7 @@ package shared_code
 
 import (
 	fenixExecutionWorkerGrpcApi "github.com/jlambert68/FenixGrpcApi/FenixExecutionServer/fenixExecutionWorkerGrpcApi/go_grpc_api"
+	fenixSyncShared "github.com/jlambert68/FenixSyncShared"
 	"github.com/jlambert68/FenixTestInstructionsAdminShared/TestInstructionAndTestInstuctionContainerTypes"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -388,6 +389,42 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcWorkerMessage(
 		ConnectorsDomainHash: testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainHash,
 	}
 
+	// Create and sign message
+	var messageHashToSign string
+	var hashesToHash []string
+	hashesToHash = []string{domainUuid,
+		testInstructionsAndTestInstructionContainersMessage.TestInstructions.TestInstructionsHash,
+		testInstructionsAndTestInstructionContainersMessage.TestInstructionContainers.TestInstructionContainersHash,
+		testInstructionsAndTestInstructionContainersMessage.AllowedUsers.AllowedUsersHash,
+		testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainHash}
+
+	messageHashToSign = fenixSyncShared.HashValues(hashesToHash, false)
+
+	// Sign the message
+	var signatureToVerifyAsBase64String string
+	signatureToVerifyAsBase64String, err = SignMessageUsingSchnorrSignature(messageHashToSign)
+	if err != nil {
+		return nil, err
+	}
+
+	// Generate the public key used to verify the signature
+	var publicKeyAsBase64String string
+	publicKeyAsBase64String, err = GeneratePublicKeyAsBase64StringFromPrivateKey()
+	if err != nil {
+		return nil, err
+	}
+	// Verify Signature
+	err = VerifySchnorrSignature(signatureToVerifyAsBase64String, publicKeyAsBase64String, signatureToVerifyAsBase64String)
+	if err != nil {
+		return nil, err
+	}
+
+	var messageSignatureData *fenixExecutionWorkerGrpcApi.MessageSignatureDataMessage
+	messageSignatureData = &fenixExecutionWorkerGrpcApi.MessageSignatureDataMessage{
+		HashToBeSigned: messageHashToSign,
+		Signature:      signatureToVerifyAsBase64String,
+	}
+
 	// Create the full gRPC message for all supported TestInstructions, TestInstructionContainers and Allowed Users
 	supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage = &fenixExecutionWorkerGrpcApi.SupportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage{
 		ClientSystemIdentification: &fenixExecutionWorkerGrpcApi.ClientSystemIdentificationMessage{
@@ -410,7 +447,8 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcWorkerMessage(
 		MessageCreationTimeStamp:                                        timestamppb.New(testInstructionsAndTestInstructionContainersMessage.MessageCreationTimeStamp),
 		TestInstructionsAndTestInstructionsContainersMessageHash:        testInstructionsAndTestInstructionContainersMessage.TestInstructionsAndTestInstructionsContainersAndUsersMessageHash,
 		ForceNewBaseLineForTestInstructionsAndTestInstructionContainers: testInstructionsAndTestInstructionContainersMessage.ForceNewBaseLineForTestInstructionsAndTestInstructionContainers,
-		ConnectorDomain: connectorsDomainGrpc,
+		ConnectorDomain:      connectorsDomainGrpc,
+		MessageSignatureData: messageSignatureData,
 	}
 
 	return supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage, err

@@ -1,6 +1,7 @@
 package shared_code
 
 import (
+	fenixExecutionWorkerGrpcApi "github.com/jlambert68/FenixGrpcApi/FenixExecutionServer/fenixExecutionWorkerGrpcApi/go_grpc_api"
 	fenixTestCaseBuilderServerGrpcApi "github.com/jlambert68/FenixGrpcApi/FenixTestCaseBuilderServer/fenixTestCaseBuilderServerGrpcApi/go_grpc_api"
 	"github.com/jlambert68/FenixTestInstructionsAdminShared/TestInstructionAndTestInstuctionContainerTypes"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -10,7 +11,8 @@ import (
 // Generates the gRPC message to be sent to Builder for Supported  TestInstructions, TestInstructionContainers and Allowed Users
 func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage(
 	domainUuid string,
-	testInstructionsAndTestInstructionContainersMessage *TestInstructionAndTestInstuctionContainerTypes.TestInstructionsAndTestInstructionsContainersStruct) (
+	testInstructionsAndTestInstructionContainersMessage *TestInstructionAndTestInstuctionContainerTypes.TestInstructionsAndTestInstructionsContainersStruct,
+	messageSignatureDataFromConnector *fenixExecutionWorkerGrpcApi.MessageSignatureDataMessage) (
 	supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage *fenixTestCaseBuilderServerGrpcApi.SupportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage,
 	err error) {
 
@@ -388,6 +390,13 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 		ConnectorsDomainHash: testInstructionsAndTestInstructionContainersMessage.ConnectorsDomain.ConnectorsDomainHash,
 	}
 
+	// Create signature message
+	var messageSignatureData *fenixTestCaseBuilderServerGrpcApi.MessageSignatureDataMessage
+	messageSignatureData = &fenixTestCaseBuilderServerGrpcApi.MessageSignatureDataMessage{
+		HashToBeSigned: messageSignatureDataFromConnector.GetHashToBeSigned(),
+		Signature:      messageSignatureDataFromConnector.GetSignature(),
+	}
+
 	// Convert ResponseVariables into gRPC-message-version
 
 	// Create the full gRPC message for all supported TestInstructions, TestInstructionContainers and Allowed Users
@@ -413,7 +422,8 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcBuilderMessage
 		MessageCreationTimeStamp:                                        timestamppb.New(testInstructionsAndTestInstructionContainersMessage.MessageCreationTimeStamp),
 		TestInstructionsAndTestInstructionsContainersMessageHash:        testInstructionsAndTestInstructionContainersMessage.TestInstructionsAndTestInstructionsContainersAndUsersMessageHash,
 		ForceNewBaseLineForTestInstructionsAndTestInstructionContainers: testInstructionsAndTestInstructionContainersMessage.ForceNewBaseLineForTestInstructionsAndTestInstructionContainers,
-		ConnectorDomain: connectorsDomainGrpc,
+		ConnectorDomain:      connectorsDomainGrpc,
+		MessageSignatureData: messageSignatureData,
 	}
 
 	return supportedTestInstructionsAndTestInstructionContainersAndAllowedUsersMessage, err
