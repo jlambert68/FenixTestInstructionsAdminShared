@@ -414,7 +414,7 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcWorkerMessage(
 		return nil, err
 	}
 	// Verify Signature
-	err = VerifySchnorrSignature(signatureToVerifyAsBase64String, publicKeyAsBase64String, signatureToVerifyAsBase64String)
+	err = VerifySchnorrSignature(messageHashToSign, publicKeyAsBase64String, signatureToVerifyAsBase64String)
 	if err != nil {
 		return nil, err
 	}
