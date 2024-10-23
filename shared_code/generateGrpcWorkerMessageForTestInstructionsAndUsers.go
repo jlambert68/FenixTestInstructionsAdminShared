@@ -392,7 +392,7 @@ func GenerateTestInstructionAndTestInstructionContainerAndUserGrpcWorkerMessage(
 	// Create and sign message
 	var messageHashToSign string
 	var hashesToHash []string
-	hashesToHash = []string{domainUuid,
+	hashesToHash = []string{
 		testInstructionsAndTestInstructionContainersMessage.TestInstructions.TestInstructionsHash,
 		testInstructionsAndTestInstructionContainersMessage.TestInstructionContainers.TestInstructionContainersHash,
 		testInstructionsAndTestInstructionContainersMessage.AllowedUsers.AllowedUsersHash,
