@@ -137,6 +137,28 @@ func VerifySchnorrSignature(
 
 }
 
+// GenerateNewPrivateKeyAsBase64String
+// Generates a new Private key which can be used when setting up a new private-public key par
+func GenerateNewPrivateKeyAsBase64String() (newPrivateKeyAsBase64String string, err error) {
+
+	// Generate a new private key.
+	var newPrivateKey *secp256k1.PrivateKey
+	newPrivateKey, err = secp256k1.GeneratePrivateKey()
+
+	if err != nil {
+		err = errors.New(fmt.Sprintf("error generating private key: %v", err))
+
+		return "", err
+	}
+
+	// Convert private key into a byte array
+	var privateKeyAsByteArray []byte
+	privateKeyAsByteArray = newPrivateKey.Serialize()
+	privateKeyAsBase64String = base64.StdEncoding.EncodeToString(privateKeyAsByteArray)
+
+	return privateKeyAsBase64String, err
+}
+
 // GeneratePublicKeyAsBase64StringFromPrivateKey
 // Generate the Public Key from the Private Key
 func GeneratePublicKeyAsBase64StringFromPrivateKey() (publicKeyUnCompressedAsString string, err error) {
