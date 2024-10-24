@@ -161,7 +161,8 @@ func GenerateNewPrivateKeyAsBase64String() (newPrivateKeyAsBase64String string, 
 
 // GeneratePublicKeyAsBase64StringFromPrivateKey
 // Generate the Public Key from the Private Key
-func GeneratePublicKeyAsBase64StringFromPrivateKey() (publicKeyUnCompressedAsString string, err error) {
+func GeneratePublicKeyAsBase64StringFromPrivateKey() (
+	publicKeyUnCompressedAsString string, err error) {
 
 	// ***** Private Key *****
 	// Load the Private key from an environment variable
@@ -169,6 +170,18 @@ func GeneratePublicKeyAsBase64StringFromPrivateKey() (publicKeyUnCompressedAsStr
 		privateKeyAsBase64String = environmentVariables.
 			ExtractEnvironmentVariableOrInjectedEnvironmentVariable("PrivateKey")
 	}
+
+	publicKeyUnCompressedAsString, err = GeneratePublicKeyAsBase64StringFromPrivateKeyInput(privateKeyAsBase64String)
+
+	return publicKeyUnCompressedAsString, err
+
+}
+
+// GeneratePublicKeyAsBase64StringFromPrivateKeyInput
+// Generate the Public Key from the Private Key as the input parameter
+func GeneratePublicKeyAsBase64StringFromPrivateKeyInput(
+	privateKeyAsBase64String string) (
+	publicKeyUnCompressedAsString string, err error) {
 
 	// Convert Private key from Base64 string into "a proper" private key
 	var privateKeyAsByteArray []byte
