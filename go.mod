@@ -5,19 +5,20 @@ go 1.22
 toolchain go1.23.0
 
 require (
-	cloud.google.com/go/iam v1.2.1
+	cloud.google.com/go/iam v1.2.2
 	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.3.0
-	github.com/jlambert68/FenixGrpcApi v0.0.0-20241022175244-86f2f20991d4
+	github.com/jlambert68/FenixGrpcApi v0.0.0-20241024112839-e9bc605c05df
 	github.com/jlambert68/FenixSyncShared v0.0.0-20240911064419-da3d922610cb
 	golang.org/x/oauth2 v0.23.0
-	google.golang.org/api v0.201.0
+	google.golang.org/api v0.203.0
 	google.golang.org/genproto v0.0.0-20241021214115-324edc3d5d38
 	google.golang.org/grpc v1.67.1
 	google.golang.org/protobuf v1.35.1
 )
 
 require (
-	cloud.google.com/go/auth v0.9.8 // indirect
+	cloud.google.com/go v0.116.0 // indirect
+	cloud.google.com/go/auth v0.9.9 // indirect
 	cloud.google.com/go/auth/oauth2adapt v0.2.4 // indirect
 	cloud.google.com/go/compute/metadata v0.5.2 // indirect
 	github.com/decred/dcrd/crypto/blake256 v1.0.1 // indirect
